@@ -1,0 +1,1464 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>4. SLS Lecture 4 : Editors, Make and Terminal IDEs &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. SLS Lecture 5a : Version Control and GIT: Part I”" href="L05.html" />
+    <link rel="prev" title="3. UNIX Process, I/O and Credentials" href="L03.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_ln.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specfic Introductions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_210_JA.html">
+   CS210 Computer Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_400_F21_JA.html">
+   CS400 Fall 2021 : Machine Level Programming
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Viewing Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lnhowto.html">
+   How to “view” lecture notes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../howto.html">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="L01.html">
+   1. SLS: Part I - UNIX : Introduction &amp;  Preliminaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L02.html">
+   2. SLS Lecture 2 : Shell Part II : Programming, Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L03.html">
+   3. UNIX Process, I/O and Credentials
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   4. SLS Lecture 4 : Editors, Make and Terminal IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L05.html">
+   5. SLS Lecture 5a : Version Control and GIT: Part I”
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L06.html">
+   6. SLS Lecture 5b : Version Control and GIT: Part II”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L07.html">
+   7. SLS Lecture 7 : Assembly Programming Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L08.html">
+   8. SLS Lecture 8 :  Writing some simple assembly programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L09.html">
+   9. UC-SLS Lecture 9 : Assembly : Operations and Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L10.html">
+   10. SLS Lecture 10 : Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L11.html">
+   11. SLS Lecture 11 :  Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L12.html">
+   12. SLS Lecture 12 : Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L13.html">
+   13. SLS Lecture 13 : Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L14.html">
+   14. SLS Lecture 14 : Assembly using the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L15.html">
+   15. SLS Lecture 15 : Processes and Virtual Memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L16.html">
+   16. SLS Lecture 16 : Caches : Constructing them from first principles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L17.html">
+   17. UC-SLS Lecuture 17 : In to the Light - C Intro
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L18.html">
+   18. UC-SLS Lecture 18 : Using C to write and organize opcode bytes - Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L19.html">
+   19. UC-SLS Lecture 19 : Using C to map and organize our data bytes - Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L20.html">
+   20. UC-SLS Lecture 20 : Using LibC to access the OS and escape the confines our process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L21.html">
+   21. UC-SLS Lecture 21 : The rest of LibC and other libraries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L22.html">
+   22. SLS Lecture 22 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L23.html">
+   23. SLS Lecture 23 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L24.html">
+   24. SLS Lecture 24 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L25.html">
+   25. SLS Lecture 25 : Topics
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/unix/L04.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap">
+   4.1. RECAP
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computer-systems-conceptual">
+   4.2. Computer Systems Conceptual
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4.3. Computer Systems Conceptual
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-runtime-structure-of-a-computer-system">
+   4.4. Running (Runtime) Structure of a Computer System
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#os-kernel-unix-kernel-as-our-example">
+   4.5. OS Kernel - UNIX Kernel as our example
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#os-kernel-system-calls">
+     4.5.1. OS Kernel System Calls
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   4.6. OS Kernel - UNIX Kernel as our example
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#os-kernel-data-structures-and-objects">
+     4.6.1. OS Kernel Data Structures and Objects
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computer-systems-practical-unix-example">
+   4.7. Computer Systems Practical – UNIX Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-try-putting-it-all-together-with-an-example">
+   4.8. Let’s try putting it all together with an example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-comes-next">
+   4.9. WHAT COMES NEXT?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ascii-editors-and-programming">
+   4.10. ASCII Editors and Programming
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-side-of-files">
+   4.11. Practical side of files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#editors">
+   4.12. EDITORS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beyond-vi-and-emacs">
+     4.12.1. Beyond VI and Emacs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#but">
+     4.12.2. BUT…
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vi-and-vim">
+     4.12.3. VI and VIM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#emacs">
+     4.12.4. EMACS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make">
+   4.13. Make
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-preliminaries">
+     4.13.1. Make preliminaries
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-basic-syntax">
+     4.13.2. Make Basic Syntax
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>SLS Lecture 4 : Editors, Make and Terminal IDEs</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recap">
+   4.1. RECAP
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computer-systems-conceptual">
+   4.2. Computer Systems Conceptual
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4.3. Computer Systems Conceptual
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#running-runtime-structure-of-a-computer-system">
+   4.4. Running (Runtime) Structure of a Computer System
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#os-kernel-unix-kernel-as-our-example">
+   4.5. OS Kernel - UNIX Kernel as our example
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#os-kernel-system-calls">
+     4.5.1. OS Kernel System Calls
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   4.6. OS Kernel - UNIX Kernel as our example
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#os-kernel-data-structures-and-objects">
+     4.6.1. OS Kernel Data Structures and Objects
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#computer-systems-practical-unix-example">
+   4.7. Computer Systems Practical – UNIX Example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-try-putting-it-all-together-with-an-example">
+   4.8. Let’s try putting it all together with an example
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#what-comes-next">
+   4.9. WHAT COMES NEXT?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ascii-editors-and-programming">
+   4.10. ASCII Editors and Programming
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#practical-side-of-files">
+   4.11. Practical side of files
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#editors">
+   4.12. EDITORS
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beyond-vi-and-emacs">
+     4.12.1. Beyond VI and Emacs
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#but">
+     4.12.2. BUT…
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vi-and-vim">
+     4.12.3. VI and VIM
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#emacs">
+     4.12.4. EMACS
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#make">
+   4.13. Make
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-preliminaries">
+     4.13.1. Make preliminaries
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-basic-syntax">
+     4.13.2. Make Basic Syntax
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sls-lecture-4-editors-make-and-terminal-ides">
+<h1><span class="section-number">4. </span>SLS Lecture 4 : Editors, Make and Terminal IDEs<a class="headerlink" href="#sls-lecture-4-editors-make-and-terminal-ides" title="Permalink to this headline">#</a></h1>
+<p>and some shell script programming to boot</p>
+<center>
+<img src="https://web.archive.org/web/20110408073350im_/http://jtnimoy-public.s3-website-us-east-1.amazonaws.com/178/TRON_GFX_BR_07.JPG" width="70%">
+https://web.archive.org/web/20110407224426/http://jtnimoy.net/workviewer.php?q=178
+</center><hr><section id="recap">
+<h2><span class="section-number">4.1. </span>RECAP<a class="headerlink" href="#recap" title="Permalink to this headline">#</a></h2>
+<p>Let review what we have discovered so far</p>
+<hr></section>
+<section id="computer-systems-conceptual">
+<h2><span class="section-number">4.2. </span>Computer Systems Conceptual<a class="headerlink" href="#computer-systems-conceptual" title="Permalink to this headline">#</a></h2>
+<table>
+    <tr>
+        <td>  
+            <p>   
+Breaks down in to two parts
+<ol>
+<li><p>Hardware</p></li>
+<li><p>Software<br />
+</p>
+</td>
+<td>
+<a class="reference internal" href="../_images/HW+SW.png"><img alt="../_images/HW+SW.png" src="../_images/HW+SW.png" style="width: 600px;" /></a>
+</td></p>
+ </tr>
+ </table>
+</li>
+</ol>
+<hr></section>
+<section id="id1">
+<h2><span class="section-number">4.3. </span>Computer Systems Conceptual<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<table>
+    <tr>
+        <td>  
+            <p>   
+Software broken down 
+<ol>
+<li><p>Operating System</p></li>
+<li><p>User (Everything else)<br />
+</p>
+</td>
+<td>
+<a class="reference internal" href="../_images/HW+OS+USER.png"><img alt="../_images/HW+OS+USER.png" src="../_images/HW+OS+USER.png" style="width: 500px;" /></a>
+</td></p>
+ </tr>
+ </table>
+</li>
+</ol>
+<hr></section>
+<section id="running-runtime-structure-of-a-computer-system">
+<h2><span class="section-number">4.4. </span>Running (Runtime) Structure of a Computer System<a class="headerlink" href="#running-runtime-structure-of-a-computer-system" title="Permalink to this headline">#</a></h2>
+<center>
+<img src="../images/HW+OS+USER2RT.png" width="1024">
+    </center><hr></section>
+<section id="os-kernel-unix-kernel-as-our-example">
+<h2><span class="section-number">4.5. </span>OS Kernel - UNIX Kernel as our example<a class="headerlink" href="#os-kernel-unix-kernel-as-our-example" title="Permalink to this headline">#</a></h2>
+<table>
+    <tr>
+        <td>  
+            <p>   
+<section id="os-kernel-system-calls">
+<h3><span class="section-number">4.5.1. </span>OS Kernel System Calls<a class="headerlink" href="#os-kernel-system-calls" title="Permalink to this headline">#</a></h3>
+<ol>
+<li><p>Processes talk to kernel through system calls</p></li>
+<li><p>System Calls can take arguments and return values
+</p>
+</td>
+<td>
+<a class="reference internal" href="../_images/kernel-syscalls-summary.png"><img alt="../_images/kernel-syscalls-summary.png" src="../_images/kernel-syscalls-summary.png" style="width: 100%;" /></a>
+</td></p>
+ </tr>
+ </table>
+</li>
+</ol>
+<hr></section>
+</section>
+<section id="id2">
+<h2><span class="section-number">4.6. </span>OS Kernel - UNIX Kernel as our example<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<table>
+    <tr>
+        <td>  
+            <p>   
+<section id="os-kernel-data-structures-and-objects">
+<h3><span class="section-number">4.6.1. </span>OS Kernel Data Structures and Objects<a class="headerlink" href="#os-kernel-data-structures-and-objects" title="Permalink to this headline">#</a></h3>
+<ol>
+<li><p>Kernel provides abstract objects like processes, files, tree of path names, users, etc</p></li>
+<li><p>Internally, uses data structures to represent the necessary state
+</p>
+</td>
+<td>
+<a class="reference internal" href="../_images/kernel-object-summary.png"><img alt="../_images/kernel-object-summary.png" src="../_images/kernel-object-summary.png" style="width: 100%;" /></a>
+</td></p>
+ </tr>
+ </table>
+</li>
+</ol>
+<hr></section>
+</section>
+<section id="computer-systems-practical-unix-example">
+<h2><span class="section-number">4.7. </span>Computer Systems Practical – UNIX Example<a class="headerlink" href="#computer-systems-practical-unix-example" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>ASCII Terminal provides a text based way for physically working with system</p></li>
+<li><p>UNIX Shells, eg. bash, provides ASCII command line “language”</p></li>
+<li><p>Core OS Ideas</p>
+<ol class="simple">
+<li><p>Processes:</p>
+<ol class="simple">
+<li><p>a “running” program</p></li>
+<li><p>shell external commands: launch processes</p></li>
+<li><p>signals: pause, un-pause, kill processes</p></li>
+<li><p>list: <code class="docutils literal notranslate"><span class="pre">ps</span></code></p></li>
+</ol>
+</li>
+<li><p>Paths:</p>
+<ol class="simple">
+<li><p>hierarchy of names : directories and files</p></li>
+<li><p>process have a working directory</p></li>
+<li><p>full path vs relative path</p></li>
+</ol>
+</li>
+<li><p>I/O: Files: data and metadata</p>
+<ul class="simple">
+<li><p>Types (typically found on all UNIXs)</p>
+<ol class="simple">
+<li><p>regular files : the “normal” files</p></li>
+<li><p>directories</p></li>
+<li><p>devices files: eg. terminals (tty files), ssd’s, etc</p></li>
+<li><p>pipes</p></li>
+<li><p>sockets</p></li>
+<li><p>symbolic links</p></li>
+</ol>
+</li>
+<li><p>Streams and redirection</p>
+<ol class="simple">
+<li><p>process open files as a stream</p></li>
+<li><p>stream identified by numeric index, fd</p>
+<ul>
+<li><p>0: standard input</p></li>
+<li><p>1: standard output</p></li>
+<li><p>2: standard error</p></li>
+</ul>
+</li>
+<li><p>shell redirection syntax</p>
+<ul>
+<li><p>setup streams</p></li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>User and Group Identifiers:</p>
+<ol class="simple">
+<li><p>user id 0: Root user</p></li>
+</ol>
+</li>
+<li><p>Permissions</p>
+<ol class="simple">
+<li><p>File Meta data indicate owner and permissions</p></li>
+<li><p>Processes have credentials</p></li>
+<li><p>Accesses are permitted if process credentials and permissions match</p></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<hr></section>
+<section id="let-s-try-putting-it-all-together-with-an-example">
+<h2><span class="section-number">4.8. </span>Let’s try putting it all together with an example<a class="headerlink" href="#let-s-try-putting-it-all-together-with-an-example" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>piping cats</p></li>
+</ul>
+<hr><p>In a single terminal</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat <span class="p">|</span> cat 
+</pre></div>
+</div>
+<p>and illustrate</p>
+<hr><p>Connect cat in two different terminals</p>
+<p>Terminal 1</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mknod mypipe p
+ls -l 
+cat &gt; mypipe 
+</pre></div>
+</div>
+<p>Terminal 2</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -l
+cat &lt; mypipe
+</pre></div>
+</div>
+<hr></section>
+<section id="what-comes-next">
+<h2><span class="section-number">4.9. </span>WHAT COMES NEXT?<a class="headerlink" href="#what-comes-next" title="Permalink to this headline">#</a></h2>
+<p>In order to learn to write “real” software we need some tools</p>
+<ol class="simple">
+<li><p>Shell organizing and navigating files</p></li>
+<li><p>ASCII Text Editors - <code class="docutils literal notranslate"><span class="pre">emacs</span></code> (or <code class="docutils literal notranslate"><span class="pre">vim</span></code> if you must)</p></li>
+<li><p>Build System - <code class="docutils literal notranslate"><span class="pre">make</span></code></p></li>
+<li><p>UNIX as an IDE - organizing your terminal windows</p></li>
+<li><p>Re-vision control - <code class="docutils literal notranslate"><span class="pre">git</span></code></p></li>
+</ol>
+<p>Then we will be able to integrate debuggers, assemblers, linkers, and compilers</p>
+<hr></section>
+<section id="ascii-editors-and-programming">
+<h2><span class="section-number">4.10. </span>ASCII Editors and Programming<a class="headerlink" href="#ascii-editors-and-programming" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>We now know what a regular File is right?</p></li>
+<li><p>ASCII file: is simply a file who’s data is encode in ASCII</p></li>
+<li><p>Traditionally HUMAN “friendly” program source code has been written as ASCII files
+- Why?</p></li>
+</ul>
+<center>
+<img align="center" width="400" src="../images/file.png">
+</center>
+Types of Paths
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span>       <span class="n">block</span> <span class="n">special</span>
+<span class="n">c</span>       <span class="n">character</span> <span class="n">special</span>
+<span class="n">d</span>       <span class="n">directory</span>
+<span class="n">f</span>       <span class="n">regular</span> <span class="n">file</span>
+<span class="n">l</span>       <span class="n">symbolic</span> <span class="n">link</span>
+<span class="n">p</span>       <span class="n">FIFO</span>
+<span class="n">s</span>       <span class="n">socket</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>We now know that what we think of as a file is a bit subtle and depends on context</p>
+<ul>
+<li><p>generally, however, as a user we think “normal” files – as objects that we use to organize and store our information.  Eg. File objects that are backed on devices which will hold our data until we explicitly delete it.</p></li>
+</ul>
+</li>
+<li><p>ASCII again is a simple coding of the English language along with some control characters</p>
+<ul>
+<li><p>code make it easy for us to “parse” the contents</p>
+<ul>
+<li><p>where each token of the coding is mapped to a single byte value</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Given ASCII’s simple coding it is easy to write programs that can “process” its contents</p>
+<ul>
+<li><p>thus we can specify a grammar/syntax/language using ASCII.  Eg. python, shell script, C, java, etc.</p></li>
+<li><p>that we can then write programs to parse and transform into other representations that can then be “executed”</p></li>
+</ul>
+</li>
+<li><p>UNIX has many man tools for working with ASCII files</p></li>
+</ul>
+</section>
+<section id="practical-side-of-files">
+<h2><span class="section-number">4.11. </span>Practical side of files<a class="headerlink" href="#practical-side-of-files" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>We should know how to use our OS to “manage” files</p>
+<ul>
+<li><p>explore what files exist and navigate the directory tree</p></li>
+<li><p>know how to use, full and relative, paths</p></li>
+<li><p>create and remove directories</p></li>
+<li><p>create files, redirect a commands output into a file, and read data from files</p></li>
+<li><p>remove files</p></li>
+<li><p>search ASCII files</p></li>
+</ul>
+</li>
+<li><p>lets put all this knowledge to good use and write a program – shell script</p></li>
+</ul>
+<ul class="simple">
+<li><p>Navigate using <code class="docutils literal notranslate"><span class="pre">pwd</span></code>, <code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">ls</span></code>, using full path <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">$HOME/bin</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mkdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rmdir</span></code>, <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span></code>, the dangerous <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-rf</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">touch</span></code>, <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">&quot;contents</span> <span class="pre">of</span>&#160; <span class="pre">/bin:&quot;</span> <span class="pre">&gt;</span> <span class="pre">myfile</span></code>, `ls /bin &gt;&gt; myfile”</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">myfile</span></code>, <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">*.o</span></code>,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grep</span></code>, <code class="docutils literal notranslate"><span class="pre">rgrep</span></code>, <code class="docutils literal notranslate"><span class="pre">find</span></code></p></li>
+<li><p>bigger example :</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># How can I navigate to home dir?</span>
+<span class="nb">cd</span> ~
+<span class="c1"># lets get a copy of the program source code from the internet (github)</span>
+git clone https://github.com/kornia/kornia.git
+<span class="c1"># use find to print all files</span>
+find ~/kornia 
+<span class="c1"># what is the difference between * and &quot;*&quot;</span>
+<span class="nb">echo</span> *
+<span class="nb">echo</span> <span class="s2">&quot;*&quot;</span>
+<span class="c1"># use &quot;-name&quot; argument to tell find to restrict/filter only name that match &lt;anything&gt;.py</span>
+find ~/kornia -name <span class="s2">&quot;*.py&quot;</span>
+<span class="c1"># search all of them for functions in a file</span>
+<span class="c1"># What is the python syntax for defining a function?</span>
+<span class="c1">#   def followed by a space</span>
+<span class="c1"># What can we use to search a file for lines that has this &quot;pattern&quot; in it?</span>
+<span class="c1">#  grep</span>
+grep <span class="s2">&quot;def &quot;</span> ~/kornia/conftest.py
+<span class="c1"># need a while loop to process each file </span>
+<span class="c1">#   what is read? &quot;help read&quot; -- very powerful idiom combine read  with while</span>
+find ~/kornia -name <span class="s2">&quot;*.py&quot;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> file<span class="p">;</span> <span class="k">do</span> grep <span class="s2">&quot;defs &quot;</span> <span class="nv">$file</span> <span class="p">;</span> <span class="k">done</span>
+<span class="c1"># lets turn this into  a program -- shell script</span>
+mkdir ~/bin
+<span class="nb">echo</span> <span class="s1">&#39;#!/bin/bash&#39;</span> &gt; ~/bin/findfuncs
+<span class="nb">echo</span> <span class="s1">&#39;find ~/kornia -name &quot;*.py&quot; | while read file; do grep &quot;def &quot; $file ; done&#39;</span> &gt;&gt; ~/bin/findfuncs
+cat ~/bin/findfuncs
+findfuncs
+<span class="c1"># What are we missing?</span>
+chmod +x ~/bin/findfuncs
+findfuncs
+<span class="c1"># What are we missing?</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:~/bin
+findfuncs
+</pre></div>
+</div>
+</section>
+<section id="editors">
+<h2><span class="section-number">4.12. </span>EDITORS<a class="headerlink" href="#editors" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Our program has a lot to be desired of it</p></li>
+<li><p>Pretty painful to keep going this way</p>
+<ul>
+<li><p>although there are “stream” “editors”,  <code class="docutils literal notranslate"><span class="pre">sed</span></code>, <code class="docutils literal notranslate"><span class="pre">awk</span></code> and <code class="docutils literal notranslate"><span class="pre">perl</span></code></p></li>
+</ul>
+</li>
+<li><p>Terminal based ASCII Editors and programming</p>
+<ul>
+<li><p>two main UNIX Religions: VI(M) and EMACS (<a class="reference external" href="https://en.wikipedia.org/wiki/Emacs#Church_of_Emacs">https://en.wikipedia.org/wiki/Emacs#Church_of_Emacs</a>)</p></li>
+</ul>
+</li>
+<li><p>in reality there are many others Terminal based editors including: <code class="docutils literal notranslate"><span class="pre">nano</span></code>, <code class="docutils literal notranslate"><span class="pre">joe</span></code>, <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">-k</span> <span class="pre">editors</span></code></p>
+<ul>
+<li><p>many editors allow for “multiple panes” and can even have terminal panes within the editor</p>
+<ul>
+<li><p>“pane” divides the UI into sub-areas that can each display their own content</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<section id="beyond-vi-and-emacs">
+<h3><span class="section-number">4.12.1. </span>Beyond VI and Emacs<a class="headerlink" href="#beyond-vi-and-emacs" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>there are more modern editors that only have a GUI</p>
+<ul>
+<li><p>sublime, atom, vscode, kate, etc</p></li>
+<li><p>The Jupyter Environment is actually an IDE with its own editor designed for web-browsers</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="but">
+<h3><span class="section-number">4.12.2. </span>BUT…<a class="headerlink" href="#but" title="Permalink to this headline">#</a></h3>
+<p>It really pays to know how to be functional in VIM and EMACS at least a little</p>
+<ul class="simple">
+<li><p>it means that you can be highly productive even with just “tty”/terminal access.</p>
+<ul>
+<li><p>eg. you have <code class="docutils literal notranslate"><span class="pre">ssh</span></code> terminal access to a remote computer</p></li>
+</ul>
+</li>
+<li><p>core component in constructing your own low-level IDE (with terminals and other tools)</p></li>
+<li><p>understanding how things actually work and fit together</p></li>
+<li><p>lowest common denominator is still the terminal</p></li>
+</ul>
+</section>
+<section id="vi-and-vim">
+<h3><span class="section-number">4.12.3. </span>VI and VIM<a class="headerlink" href="#vi-and-vim" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>VI 1976 by Bill Joy: <a class="reference external" href="https://en.wikipedia.org/wiki/Vi">https://en.wikipedia.org/wiki/Vi</a></p></li>
+<li><p>VIM 1991 by Bram Moolenaar: <a class="reference external" href="https://en.wikipedia.org/wiki/Vim_(text_editor)">https://en.wikipedia.org/wiki/Vim_(text_editor)</a></p>
+<ul>
+<li><p>VIM has in some sense subsumed VI and on most unix systems when you issue vi you really get VIM</p></li>
+<li><p>Has some support for extensions and advanced features</p></li>
+</ul>
+</li>
+<li><p>Remember all these tools were written by programmers for programmers</p>
+<ul>
+<li><p>its greatest power and its learning curve comes from its text based command interface</p>
+<ul>
+<li><p>AKA it is not menu driven</p></li>
+<li><p>two core modes of operation:  Command mode and Insert mode</p></li>
+<li><p>It actually has 12 modes (according to the wikipedia entry)</p></li>
+</ul>
+</li>
+<li><p>I only know the basics but use it very often when need to make quick changes to files</p></li>
+</ul>
+</li>
+<li><p>built in help <code class="docutils literal notranslate"><span class="pre">:help</span></code> and lots of online resources and tutorials – including a <code class="docutils literal notranslate"><span class="pre">game</span></code></p></li>
+<li><p>Lets use VIM to improve our program</p></li>
+</ul>
+</section>
+<section id="emacs">
+<h3><span class="section-number">4.12.4. </span>EMACS<a class="headerlink" href="#emacs" title="Permalink to this headline">#</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Emacs">https://en.wikipedia.org/wiki/Emacs</a></p>
+<ul class="simple">
+<li><p>EMACS 1976 David A. Moon and Guy L. Steele Jr</p></li>
+<li><p>GNU EMACS ~1985 Richard Stallman</p></li>
+<li><p>It has graphical versions but we are going to stick with the terminal mode</p></li>
+<li><p>It is a little more recognizable as an editor as it does have menus (<code class="docutils literal notranslate"><span class="pre">F10</span></code> to access menu bar)</p>
+<ul>
+<li><p>but it is still pretty cryptic</p></li>
+</ul>
+</li>
+<li><p>Its defining feature is its extensibility</p>
+<ul>
+<li><p>no surprise it is built around a programing language. Elisp (a lisp derived language)</p></li>
+<li><p>thousands and thousands of packages</p></li>
+<li><p>extremely configurable</p></li>
+<li><p>lot and lots of programmer tools and support – often used as an IDE unto itself</p>
+<ul>
+<li><p>generally I am going shy away from using it this way in class</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>all its extensibility and external packages can make emacs very complex</p></li>
+<li><p>lots and lots of key-stroke combinations to do stuff</p>
+<ul>
+<li><p>easiest to have a cheat sheet</p></li>
+<li><p>use menu system and take note of keyboard shortcuts listed</p></li>
+<li><p>learn to use complex built in help system</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>I grew up on emacs</p></li>
+<li><p>lets <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/bin</span></code> so we start with this as our working directory when we are in vim</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">emacs</span></code> or <code class="docutils literal notranslate"><span class="pre">emacs</span> <span class="pre">findfuncs</span></code></p></li>
+<li><p>open file</p></li>
+<li><p>break the lines up and add a comment</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># this is our crude bash script to try and find all python functions</span>
+<span class="c1"># in all the .py files within a directory tree</span>
+find ~/kornia -name <span class="s2">&quot;*.py&quot;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> file
+<span class="k">do</span> 
+  grep <span class="s2">&quot;def &quot;</span> <span class="nv">$file</span> 
+<span class="k">done</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>lets add line numbers : <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">-n</span> <span class="pre">$file</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">def</span></code></p>
+<ul>
+<li><p>exit and demo <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">-n</span></code></p></li>
+</ul>
+</li>
+<li><p>add to loop</p>
+<ul>
+<li><p>start with a bug <code class="docutils literal notranslate"><span class="pre">cat-n</span> <span class="pre">$file</span></code></p></li>
+<li><p>exit run</p></li>
+</ul>
+</li>
+<li><p>lets start builing out our IDE: use a second terminal test</p>
+<ul>
+<li><p>NEW Terminal</p>
+<ul>
+<li><p>set prompt <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PS1='DEBUG$</span> <span class="pre">'</span></code> to help us stay organized</p></li>
+</ul>
+</li>
+<li><p>ET:  add <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-x</span></code>; DT: run ; ET: add <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-e</span></code></p></li>
+<li><p>ET: edit fix</p></li>
+<li><p>DT: test</p></li>
+</ul>
+</li>
+<li><p>notes:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-n</span></code> : dry run good to check for syntax errors without execution</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">-u</span></code> : expansion of unset variable is an error good for catching typeos</p></li>
+</ul>
+</li>
+<li><p>now lets get fancier</p></li>
+<li><p>lets extend/modify our code to produce a report of all the names of the functions we find and what files they are in</p>
+<ul>
+<li><p>report format: one line per function definition</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;function</span> <span class="pre">name&gt;&lt;space&gt;&lt;file&gt;:&lt;space&gt;&lt;line</span> <span class="pre">number&gt;</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>many ways to go about it but going to try and stick to core shell programming</p>
+<ul>
+<li><p>and idioms I have found very useful – learn a few well</p></li>
+</ul>
+</li>
+<li><p>iterate to this code:</p>
+<ol class="simple">
+<li><p>add <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">read</span> <span class="pre">line</span> <span class="pre">def</span> <span class="pre">func</span> <span class="pre">rest;</span> <span class="pre">do</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">$func</span> <span class="pre">$file:</span> <span class="pre">$line</span></code></p></li>
+<li><p>cleanup function name with <code class="docutils literal notranslate"><span class="pre">${func%%(*}</span></code></p></li>
+<li><p>add pipe to sort <code class="docutils literal notranslate"><span class="pre">|</span> <span class="pre">sort</span></code></p></li>
+</ol>
+</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find ~/kornia -name <span class="s2">&quot;*.py&quot;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> file
+<span class="k">do</span>
+    cat -n <span class="nv">$file</span> <span class="p">|</span> grep <span class="s1">&#39;def &#39;</span><span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line def func rest<span class="p">;</span> <span class="k">do</span>
+        <span class="nv">func</span><span class="o">=</span><span class="si">${</span><span class="nv">func</span><span class="p">%%(*</span><span class="si">}</span>
+        <span class="nb">echo</span> <span class="nv">$func</span> <span class="nv">$file</span>: <span class="nv">$line</span>
+    <span class="k">done</span>
+<span class="k">done</span> <span class="p">|</span> sort
+</pre></div>
+</div>
+</section>
+</section>
+<section id="make">
+<h2><span class="section-number">4.13. </span>Make<a class="headerlink" href="#make" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Two things go into any programming development process:</p>
+<ul>
+<li><p>modify files</p></li>
+<li><p>running commands that process those files</p></li>
+</ul>
+</li>
+<li><p>Editors are great tools for the first</p></li>
+<li><p>but constantly running commands in the terminal is not a great solution for the second</p>
+<ul>
+<li><p>There might be many files that we want to run commands on</p></li>
+<li><p>There might be various different commands to run</p></li>
+<li><p>Some commands might depend on on some file</p></li>
+<li><p>etc.</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>This is where the <code class="docutils literal notranslate"><span class="pre">make</span></code> utility comes in</p>
+<ul>
+<li><p>make automates running commands on files when they have changed</p>
+<ul>
+<li><p>lets a developer document what “depends” on what</p></li>
+<li><p>and specify what the rules are for generating new/derived files when a dependency has changed</p></li>
+</ul>
+</li>
+<li><p>the most common use is in the “building” of programs</p>
+<ul>
+<li><p>where various commands need to be run on the source files</p>
+<ul>
+<li><p>to create the “final” program</p></li>
+</ul>
+</li>
+<li><p>most IDE either use <code class="docutils literal notranslate"><span class="pre">make</span></code> internal or have some equivalent</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code>, however,  is a generic tool for automation</p></li>
+</ul>
+</li>
+</ul>
+<ul class="simple">
+<li><p>Like the rest of UNIX Make is old, powerful and cryptic</p>
+<ul>
+<li><p>1976 Stuart Feldman <a class="reference external" href="https://en.wikipedia.org/wiki/Make_(software)">https://en.wikipedia.org/wiki/Make_(software)</a></p></li>
+<li><p>There are many variants we are going to focus on GNU Make</p>
+<ul>
+<li><p><a class="reference external" href="https://www.gnu.org/software/make/">https://www.gnu.org/software/make/</a></p></li>
+<li><p>Manual <a class="reference external" href="https://www.gnu.org/software/make/manual/make.html">https://www.gnu.org/software/make/manual/make.html</a></p></li>
+</ul>
+</li>
+<li><p>Basic syntax and use is not too bad</p>
+<ul>
+<li><p>however over the years many features and subtle syntax has been added</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>lets use make to automate the use of our <code class="docutils literal notranslate"><span class="pre">findfunc</span></code> command</p>
+<ul>
+<li><p>evolving our usage and understanding as we go</p></li>
+</ul>
+</li>
+</ul>
+<section id="make-preliminaries">
+<h3><span class="section-number">4.13.1. </span>Make preliminaries<a class="headerlink" href="#make-preliminaries" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Lets revisit the file meta data so we can understand how make detects that something has changed</p></li>
+<li><p>Every time a file is modified UNIX updates a field in the meta data of the file called <code class="docutils literal notranslate"><span class="pre">mtime</span></code></p>
+<ul>
+<li><p>every time the file is written <code class="docutils literal notranslate"><span class="pre">mtime</span></code> changes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">touch</span></code> can update the <code class="docutils literal notranslate"><span class="pre">mtime</span></code> to the current time without changing the contents</p></li>
+</ul>
+</li>
+<li><p>Make uses a simple idea</p>
+<ul>
+<li><p>if file ‘A’ has a modification time that is newer than file ‘B’</p>
+<ul>
+<li><p>and file ‘B’ some how depends on file ‘A’</p>
+<ul>
+<li><p>then ‘B’ is considered to be out of date</p>
+<ul>
+<li><p>any commands/rules that are needed to produce ‘B’ should be executed</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Note Make is not really looking at the contents of the files only timestamps</p>
+<ul>
+<li><p>touch on a ‘source’ will be sufficient to cause things to be rebuilt</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="make-basic-syntax">
+<h3><span class="section-number">4.13.2. </span>Make Basic Syntax<a class="headerlink" href="#make-basic-syntax" title="Permalink to this headline">#</a></h3>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">target</span><span class="o">:</span> <span class="n">dependencies</span>
+    rules
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>must use <code class="docutils literal notranslate"><span class="pre">&lt;tab&gt;</span></code> to indent rule lines</p></li>
+<li><p>lets assume every time that the <code class="docutils literal notranslate"><span class="pre">CHANGELOG.md</span></code> is modified we would like to rebuild our report</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<ul class="simple">
+<li><p>BT lets create a project directory : findfunc</p></li>
+<li><p>lets put script and makefile in it</p></li>
+<li><p>start with</p></li>
+</ul>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nf">funcs.txt</span><span class="o">:</span> ~/<span class="n">kornia</span>/<span class="n">CHANGELOG</span>.<span class="n">md</span>
+    ./findfuncs &gt; <span class="nv">$@</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>lets move towards the following</p>
+<ol class="simple">
+<li><p>add target <code class="docutils literal notranslate"><span class="pre">kornia/CHANGELOG.md:</span></code> no dep rule: git clone <code class="docutils literal notranslate"><span class="pre">https://github.com/kornia/kornia.git</span></code></p></li>
+<li><p>modify our findfuncs to take directory as a paramter and a usage if empty</p></li>
+<li><p>progressively add Make variables</p></li>
+<li><p>add a clean target and .PHONEY</p></li>
+<li><p>add a funccount.txt target dep: <code class="docutils literal notranslate"><span class="pre">funcs.txt</span></code>  rule: <code class="docutils literal notranslate"><span class="pre">wc</span> <span class="pre">-l</span> <span class="pre">$&lt;</span> <span class="pre">&gt;</span> <span class="pre">$&#64;</span></code></p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">all</span></code> target with <code class="docutils literal notranslate"><span class="pre">funccount.txt</span></code> as dependency</p></li>
+<li><p>add <code class="docutils literal notranslate"><span class="pre">torchfuncs.txt</span></code> target dep: <code class="docutils literal notranslate"><span class="pre">funcs.txt</span></code> rule: <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">'torch'</span> <span class="pre">$&lt;</span> <span class="pre">&gt;</span> <span class="pre">$&#64;</span></code></p></li>
+</ol>
+</li>
+<li><p>makefile</p></li>
+</ul>
+<div style="width:100%; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="nv">DIR</span><span class="o">=</span>kornia
+<span class="nv">REPO</span><span class="o">=</span>https://github.com/kornia/kornia.git
+
+<span class="nf">.PHONEY</span><span class="o">:</span> <span class="n">clean</span> <span class="n">all</span>
+
+<span class="nf">all</span><span class="o">:</span> <span class="n">funcscount</span>.<span class="n">txt</span> <span class="n">torchfuncs</span>.<span class="n">txt</span>
+
+<span class="nf">funcs.txt</span><span class="o">:</span> ${<span class="n">DIR</span>}/<span class="n">CHANGELOG</span>.<span class="n">md</span>
+	./findfuncs <span class="si">${</span><span class="nv">DIR</span><span class="si">}</span> &gt; <span class="nv">$@</span>
+
+<span class="nf">funcscount.txt</span><span class="o">:</span> <span class="n">funcs</span>.<span class="n">txt</span>
+	wc -l $&lt; &gt; <span class="nv">$@</span>
+
+<span class="c"># add this after so that we can see incremental running of rules</span>
+<span class="nf">torchfuncs.txt</span><span class="o">:</span> <span class="n">funcs</span>.<span class="n">txt</span>
+	grep <span class="s1">&#39;torch&#39;</span> $&lt; &gt; <span class="nv">$@</span>
+
+<span class="nf">kornia/CHANGELOG.md</span><span class="o">:</span>
+	git clone <span class="si">${</span><span class="nv">REPO</span><span class="si">}</span>
+
+<span class="nf">clean</span><span class="o">:</span>
+	-rm funcs.txt funcscount.txt torchfuncs.txt
+
+<span class="nf">distclean</span><span class="o">:</span>
+	-rm -rf <span class="si">${</span><span class="nv">DIR</span><span class="si">}</span>
+</pre></div>
+</div>
+</div>
+<ul class="simple">
+<li><p>findfuncs will need to be modified to add an argument</p></li>
+</ul>
+<div style="width:100%; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># this is our crude bash script to try and find all python functions</span>
+<span class="c1"># in all the .py files within a directory tree</span>
+
+<span class="c1">#set -n  # -n dry run  good for syntax checking (without running any commands)</span>
+<span class="c1">#set -x  # tracing of simple commands on </span>
+<span class="c1">#set -e  # exit script on any fail return code</span>
+<span class="c1">#set -u  # error if expanding unset variable ... goood for catching typeos</span>
+
+<span class="nv">DIR</span><span class="o">=</span><span class="nv">$1</span>
+<span class="o">[[</span> -z <span class="nv">$DIR</span> <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;USAGE: </span><span class="nv">$0</span><span class="s2"> &lt;directory&gt;&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit</span> -1
+
+find <span class="nv">$DIR</span> -name <span class="s2">&quot;*.py&quot;</span> <span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> file
+<span class="k">do</span>
+    cat -n <span class="nv">$file</span> <span class="p">|</span> grep <span class="s1">&#39;def &#39;</span><span class="p">|</span> <span class="k">while</span> <span class="nb">read</span> line def func rest<span class="p">;</span> <span class="k">do</span>
+	<span class="nv">func</span><span class="o">=</span><span class="si">${</span><span class="nv">func</span><span class="p">%%(*</span><span class="si">}</span>
+	<span class="nb">echo</span> <span class="nv">$func</span> <span class="nv">$file</span>: <span class="nv">$line</span>
+    <span class="k">done</span>	
+<span class="k">done</span> <span class="p">|</span> sort 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./unix"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="L03.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">3. </span>UNIX Process, I/O and Credentials</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="L05.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>SLS Lecture 5a : Version Control and GIT: Part I”</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

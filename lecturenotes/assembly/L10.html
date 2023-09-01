@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>10. SLS Lecture 10 : Assembly : Program Anatomy I &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="11. SLS Lecture 11 : Program Anatomy II : Functions" href="L11.html" />
+    <link rel="prev" title="9. UC-SLS Lecture 9 : Assembly : Operations and Data Types" href="L09.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_ln.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specfic Introductions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_210_JA.html">
+   CS210 Computer Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_400_F21_JA.html">
+   CS400 Fall 2021 : Machine Level Programming
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Viewing Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lnhowto.html">
+   How to “view” lecture notes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../howto.html">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L01.html">
+   1. SLS: Part I - UNIX : Introduction &amp;  Preliminaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L02.html">
+   2. SLS Lecture 2 : Shell Part II : Programming, Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L03.html">
+   3. UNIX Process, I/O and Credentials
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L04.html">
+   4. SLS Lecture 4 : Editors, Make and Terminal IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L05.html">
+   5. SLS Lecture 5a : Version Control and GIT: Part I”
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L06.html">
+   6. SLS Lecture 5b : Version Control and GIT: Part II”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="L07.html">
+   7. SLS Lecture 7 : Assembly Programming Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L08.html">
+   8. SLS Lecture 8 :  Writing some simple assembly programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L09.html">
+   9. UC-SLS Lecture 9 : Assembly : Operations and Data Types
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   10. SLS Lecture 10 : Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L11.html">
+   11. SLS Lecture 11 :  Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L12.html">
+   12. SLS Lecture 12 : Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L13.html">
+   13. SLS Lecture 13 : Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L14.html">
+   14. SLS Lecture 14 : Assembly using the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L15.html">
+   15. SLS Lecture 15 : Processes and Virtual Memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L16.html">
+   16. SLS Lecture 16 : Caches : Constructing them from first principles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L17.html">
+   17. UC-SLS Lecuture 17 : In to the Light - C Intro
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L18.html">
+   18. UC-SLS Lecture 18 : Using C to write and organize opcode bytes - Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L19.html">
+   19. UC-SLS Lecture 19 : Using C to map and organize our data bytes - Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L20.html">
+   20. UC-SLS Lecture 20 : Using LibC to access the OS and escape the confines our process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L21.html">
+   21. UC-SLS Lecture 21 : The rest of LibC and other libraries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L22.html">
+   22. SLS Lecture 22 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L23.html">
+   23. SLS Lecture 23 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L24.html">
+   24. SLS Lecture 24 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L25.html">
+   25. SLS Lecture 25 : Topics
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/assembly/L10.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sumit-s-and-usesum-s">
+   10.1.
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sumit.s
+    </span>
+   </code>
+   and
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     usesum.s
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     10.1.1. Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lets-try-and-write-a-reusable-routine">
+     10.1.2. Lets try and write a reusable routine
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-assemble-sumit-s-into-sumit-o">
+       10.1.2.1. To assemble
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.s
+        </span>
+       </code>
+       into
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.o
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#so-how-might-we-use-our-fragment">
+     10.1.3. So how might we use our “fragment”
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-assemble-usesum-s-into-usesum-o">
+       10.1.3.1. To assemble
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.s
+        </span>
+       </code>
+       into
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.o
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-link-usesum-o-and-sumit-o-into-an-executable-usesum">
+       10.1.3.2. To link
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.o
+        </span>
+       </code>
+       and
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.o
+        </span>
+       </code>
+       into an executable
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lets-make-some-data">
+     10.1.4. Lets make some data!
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#let-s-make-some-real-data">
+       10.1.4.1. Let’s  make some “real” data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-run-usesum-and-load-data-with-gdb">
+     10.1.5. How to run
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       usesum
+      </span>
+     </code>
+     and  load data with gdb
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#this-code-has-a-problem-that-we-will-address-in-the-next-lecture">
+   10.2. This code has a problem that we will address in the next lecture
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>SLS Lecture 10 : Assembly : Program Anatomy I</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#sumit-s-and-usesum-s">
+   10.1.
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     sumit.s
+    </span>
+   </code>
+   and
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     usesum.s
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     10.1.1. Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lets-try-and-write-a-reusable-routine">
+     10.1.2. Lets try and write a reusable routine
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-assemble-sumit-s-into-sumit-o">
+       10.1.2.1. To assemble
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.s
+        </span>
+       </code>
+       into
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.o
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#so-how-might-we-use-our-fragment">
+     10.1.3. So how might we use our “fragment”
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-assemble-usesum-s-into-usesum-o">
+       10.1.3.1. To assemble
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.s
+        </span>
+       </code>
+       into
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.o
+        </span>
+       </code>
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#to-link-usesum-o-and-sumit-o-into-an-executable-usesum">
+       10.1.3.2. To link
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum.o
+        </span>
+       </code>
+       and
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         sumit.o
+        </span>
+       </code>
+       into an executable
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         usesum
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#lets-make-some-data">
+     10.1.4. Lets make some data!
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#let-s-make-some-real-data">
+       10.1.4.1. Let’s  make some “real” data
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#how-to-run-usesum-and-load-data-with-gdb">
+     10.1.5. How to run
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       usesum
+      </span>
+     </code>
+     and  load data with gdb
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#this-code-has-a-problem-that-we-will-address-in-the-next-lecture">
+   10.2. This code has a problem that we will address in the next lecture
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sls-lecture-10-assembly-program-anatomy-i">
+<h1><span class="section-number">10. </span>SLS Lecture 10 : Assembly : Program Anatomy I<a class="headerlink" href="#sls-lecture-10-assembly-program-anatomy-i" title="Permalink to this headline">#</a></h1>
+<center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.002.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.003.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.004.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.005.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.006.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.007.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.008.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.009.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.010.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.011.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.012.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.013.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.014.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.015.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.016.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.017.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.018.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.019.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.020.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.021.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.022.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.023.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.024.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.025.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.026.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.027.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.028.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.029.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.030.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.031.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.032.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.033.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.034.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.035.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.036.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.037.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.038.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.039.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.040.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.041.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.042.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.043.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.044.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.045.png">
+</center><center>
+<img src="../images/ASSEMBLY-PGMII/ASSEMBLY-PGMII.046.png">
+</center><section id="sumit-s-and-usesum-s">
+<h2><span class="section-number">10.1. </span><code class="docutils literal notranslate"><span class="pre">sumit.s</span></code> and <code class="docutils literal notranslate"><span class="pre">usesum.s</span></code><a class="headerlink" href="#sumit-s-and-usesum-s" title="Permalink to this headline">#</a></h2>
+<section id="setup">
+<h3><span class="section-number">10.1.1. </span>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<ul class="simple">
+<li><p>create a directory <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">sum;</span> <span class="pre">cd</span> <span class="pre">sum</span></code></p></li>
+<li><p>create and write  <code class="docutils literal notranslate"><span class="pre">sumit.s</span></code> and <code class="docutils literal notranslate"><span class="pre">usesumit.s</span></code> see below</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> to automate assembling and linking</p>
+<ul>
+<li><p>we are going run the commands by hand this time to highlight the details</p></li>
+</ul>
+</li>
+<li><p>add our <code class="docutils literal notranslate"><span class="pre">setup.gdb</span></code> to make working in gdb easier</p></li>
+<li><p>normally you would want to track everything in git</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="lets-try-and-write-a-reusable-routine">
+<h3><span class="section-number">10.1.2. </span>Lets try and write a reusable routine<a class="headerlink" href="#lets-try-and-write-a-reusable-routine" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>lets assume that we have a symbol <code class="docutils literal notranslate"><span class="pre">XARRAY</span></code> that is the address of the data</p></li>
+<li><p>lets assume to use our routine you need to pass the length of the array</p>
+<ul>
+<li><p>len in <code class="docutils literal notranslate"><span class="pre">rbx</span></code></p></li>
+<li><p>use <code class="docutils literal notranslate"><span class="pre">rdi</span></code> for loop index (<code class="docutils literal notranslate"><span class="pre">i</span></code>)</p></li>
+</ul>
+</li>
+<li><p>let put the result in <code class="docutils literal notranslate"><span class="pre">rax</span></code></p></li>
+</ul>
+<p>Think about our objective in these terms</p>
+<div class="math notranslate nohighlight">
+\[ S = \sum_{i=0}^{n-1}x_i \rightarrow rax = \sum_{rdi=0}^{rbx-1} XARRAY[rdi]  \]</div>
+<p>right?</p>
+<p>Ok remember the tricky part is realizing that it is up to us to implement
+the idea of an array.</p>
+<ul class="simple">
+<li><p>it is a data structure that we need to keep straight our head</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<p><b>CODE: asm - sumit.s</p>
+<div style="width:107em; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span>	.intel_syntax noprefix
+
+	.section .text
+
+	# tell linker that sumIt symbol can be referenced in other files
+	.global sumIt  
+
+	# code to sum data at XARRAY
+	# we assume rbx has length  rbx -&gt; len
+	# and that we will leave final sum in rax
+sumIt:	                         # label that marks where this code begins
+	xor  rax, rax            # rax -&gt; sum : sum = 0
+	xor  rdi, rdi            # rdi -&gt; i : i = 0
+
+	# code to sum data at XARRAY
+	# we assume rbx has length  rbx -&gt; len
+	# and that we will leave final sum in rax
+loop_start:
+	cmp  rbx, rdi                          # rbx - rdi
+	jz   loop_done                         # if above is zero (they are equal) jump
+	add  rax, QWORD PTR [XARRAY + rdi * 8] # add the i&#39;th value to the sum
+	inc  rdi                               # i=i+1
+	jmp   loop_start                       # go back to the start of the loop
+loop_done:
+	int3                                   # don&#39;t know where to go next
+	                                       # give up and &quot;trap&quot; to the debugger
+
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<section id="to-assemble-sumit-s-into-sumit-o">
+<h4><span class="section-number">10.1.2.1. </span>To assemble <code class="docutils literal notranslate"><span class="pre">sumit.s</span></code> into <code class="docutils literal notranslate"><span class="pre">sumit.o</span></code><a class="headerlink" href="#to-assemble-sumit-s-into-sumit-o" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "231ffe4e21fb473abbfafe7ed829ef4a", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+</section>
+<section id="so-how-might-we-use-our-fragment">
+<h3><span class="section-number">10.1.3. </span>So how might we use our “fragment”<a class="headerlink" href="#so-how-might-we-use-our-fragment" title="Permalink to this headline">#</a></h3>
+<p>Lets create a program that defines a <code class="docutils literal notranslate"><span class="pre">_start</span></code> routine and creates the memory locations that we can control.</p>
+<p>Lets create <code class="docutils literal notranslate"><span class="pre">usesum.s</span></code></p>
+<p>Lets assume that</p>
+<ul class="simple">
+<li><p>will set aside enough memory for an maximum of 1000 values in where we set the <code class="docutils literal notranslate"><span class="pre">XARRAY</span></code> symbol</p></li>
+<li><p>we will allow the length actual length of data in <code class="docutils literal notranslate"><span class="pre">XARRAY</span></code> to be specified at a location marked by  <code class="docutils literal notranslate"><span class="pre">XARRAY_LEN</span></code>.</p></li>
+<li><p>we will store the result in a location marked by the symbol <code class="docutils literal notranslate"><span class="pre">sum</span></code></p></li>
+</ul>
+<p>We will use our code by loading our data at XARRAY, updating XARRAY_LEN, executing the code and examining the result</p>
+<ol class="simple">
+<li><p>The code should setup the memory we need</p></li>
+<li><p>setup the registers as needed for <code class="docutils literal notranslate"><span class="pre">sumIt</span></code></p></li>
+<li><p>run <code class="docutils literal notranslate"><span class="pre">sumIt</span></code></p></li>
+<li><p>store the results at the location of <code class="docutils literal notranslate"><span class="pre">sum</span></code></p></li>
+</ol>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<p><b>CODE: asm - usesum.s</p>
+<div style="width:107em; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="na">.intel_syntax</span><span class="w"> </span><span class="no">noprefix</span><span class="w"></span>
+<span class="w">	</span>
+<span class="w">	</span><span class="na">.section</span><span class="w"> </span><span class="no">.data</span><span class="w"></span>
+<span class="w">	</span><span class="c1">#  a place for us to store how much data is in the XARRAY</span>
+<span class="w">	</span><span class="c1">#  initalized it to 0</span>
+<span class="nl">XARRAY_LEN:</span><span class="w"></span>
+<span class="w">	</span><span class="na">.quad</span><span class="w"> </span><span class="mi">0x0</span><span class="w"></span>
+<span class="w">	</span><span class="c1"># reserve enough space for 1024 8 byte values</span>
+<span class="w">	</span><span class="c1">#  third argument is alignment.... turns out cpu</span>
+<span class="w">	</span><span class="c1">#  cpu is more efficient if things are located at address</span>
+<span class="w">	</span><span class="c1">#  of a particular &#39;alignment (see intel manual)</span>
+<span class="w">	</span><span class="na">.comm</span><span class="w"> </span><span class="no">XARRAY</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">*</span><span class="mi">1024</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w">	</span>
+<span class="w">	</span><span class="no">.comm</span><span class="w"> </span><span class="no">sum</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"> 	</span><span class="c1"># space to store final sum</span>
+
+<span class="w">	</span><span class="na">.section</span><span class="w"> </span><span class="no">.text</span><span class="w"></span>
+<span class="w">	</span><span class="na">.global</span><span class="w"> </span><span class="no">_start</span><span class="w"> </span>
+<span class="no">_start</span><span class="p">:</span><span class="w"></span>
+<span class="w">	</span><span class="nf">mov</span><span class="w"> </span><span class="no">rbx</span><span class="p">,</span><span class="w"> </span><span class="no">QWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">XARRAY_LEN</span><span class="p">]</span><span class="w"></span>
+
+<span class="w">	</span><span class="nf">jmp</span><span class="w"> </span><span class="no">sumIt</span><span class="w"></span>
+<span class="w">	</span><span class="nf">mov</span><span class="w"> </span><span class="no">QWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">sum</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w"></span>
+
+<span class="w">	</span><span class="nf">int3</span><span class="w"></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<section id="to-assemble-usesum-s-into-usesum-o">
+<h4><span class="section-number">10.1.3.1. </span>To assemble <code class="docutils literal notranslate"><span class="pre">usesum.s</span></code> into <code class="docutils literal notranslate"><span class="pre">usesum.o</span></code><a class="headerlink" href="#to-assemble-usesum-s-into-usesum-o" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8f1632e70caa44e094571d1f8474e493", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+<section id="to-link-usesum-o-and-sumit-o-into-an-executable-usesum">
+<h4><span class="section-number">10.1.3.2. </span>To link <code class="docutils literal notranslate"><span class="pre">usesum.o</span></code> and <code class="docutils literal notranslate"><span class="pre">sumit.o</span></code> into an executable <code class="docutils literal notranslate"><span class="pre">usesum</span></code><a class="headerlink" href="#to-link-usesum-o-and-sumit-o-into-an-executable-usesum" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "826a17abf7e940b298e03373c2faf88a", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+</section>
+<section id="lets-make-some-data">
+<h3><span class="section-number">10.1.4. </span>Lets make some data!<a class="headerlink" href="#lets-make-some-data" title="Permalink to this headline">#</a></h3>
+<p>Lets create an ascii file with 10 numbers and then use a tool called <code class="docutils literal notranslate"><span class="pre">ascii2binary</span></code> to convert it into 8 byte signed integers</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7f554d356aa941dcb30715d2781967e1", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "32b48a95d2d6412c99e4315a509910c1", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "c9c5dbc27b444107aa190fc891fc5666", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<section id="let-s-make-some-real-data">
+<h4><span class="section-number">10.1.4.1. </span>Let’s  make some “real” data<a class="headerlink" href="#let-s-make-some-real-data" title="Permalink to this headline">#</a></h4>
+<p>Some Unix tricks of the trade</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8e09fb29b7234f44b75719575f1f0443", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "89603e7fbfa6499c85388eb0198b756d", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+</section>
+<section id="how-to-run-usesum-and-load-data-with-gdb">
+<h3><span class="section-number">10.1.5. </span>How to run <code class="docutils literal notranslate"><span class="pre">usesum</span></code> and  load data with gdb<a class="headerlink" href="#how-to-run-usesum-and-load-data-with-gdb" title="Permalink to this headline">#</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gdb -x setup.gdb usesum
+b _start
+run
+# restore lets us load memory from a file
+restore 10num.bin binary &amp;XARRAY
+# set the number of elements
+set {long long} &amp; XARRAY_LEN = 10
+# get address of XARRAY
+p &amp; XARRAY
+# now use this address to display the element we are currently summing 
+# eg lets assume the prior command indicated that the address of XARRAY is 0x402010
+display {long long}(0x402010 + ($rdi * 8))
+# display the XARRAY_LEN and sum so we can see if and when they change
+display {{long long} &amp; XARRAY_LEN, {long long} &amp; sum}
+# now we can single step our way through or continue till we hit an int3
+</pre></div>
+</div>
+<p>You can do the same now with the <code class="docutils literal notranslate"><span class="pre">100randomnum.bin</span></code> file. Eg.<code class="docutils literal notranslate"><span class="pre">restore</span> <span class="pre">100randomnum.bin</span> <span class="pre">&amp;</span> <span class="pre">XARRAY</span></code> and <code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{long</span> <span class="pre">long}</span> <span class="pre">&amp;</span> <span class="pre">XARRAY_LEN</span> <span class="pre">=</span> <span class="pre">100</span></code></p>
+</section>
+</section>
+<section id="this-code-has-a-problem-that-we-will-address-in-the-next-lecture">
+<h2><span class="section-number">10.2. </span>This code has a problem that we will address in the next lecture<a class="headerlink" href="#this-code-has-a-problem-that-we-will-address-in-the-next-lecture" title="Permalink to this headline">#</a></h2>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"231ffe4e21fb473abbfafe7ed829ef4a": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_5d94064112f4485383767ca5e41d56ab", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nas -g  sumit.s -o sumit.o\r\n"}]}}, "32b48a95d2d6412c99e4315a509910c1": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_b93b5c0c5b174a3b9474291faaf1b6ea", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ cat 10num.txt\n1 1 1 1 1 1 1 1 8 -17 \r\n"}]}}, "37cf2bc1bb36435c97fe9268a073da73": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "38b05f94d202491fb0a67d79cf1a8418": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5d94064112f4485383767ca5e41d56ab": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6352b83208994699afeb322682fad648": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_38b05f94d202491fb0a67d79cf1a8418", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ hexdump -C 100randomnum.bin | head -10\n00000000  2d 3d af c0 0d 33 0a 8c  18 90 bf ca 8b 4d ae 06  |-=...3.......M..|\r\n00000010  ff 69 85 1a 59 33 99 6b  88 ce 58 51 49 41 03 f3  |.i..Y3.k..XQIA..|\r\n00000020  17 58 d5 b0 1b 3d 34 31  12 c5 51 91 ce ae 9e c2  |.X...=41..Q.....|\r\n00000030  7a 5e 99 eb d7 1a 7d 3e  b1 25 13 91 35 f4 6a 2b  |z^....}>.%..5.j+|\r\n00000040  6c 8f ab 1e 4e 19 5b 34  61 ae 40 51 cd c0 75 aa  |l...N.[4a.@Q..u.|\r\n00000050  1a 3f 1c 6c 77 41 63 7a  55 fb 8d ac 51 65 a3 ff  |.?.lwAczU...Qe..|\r\n00000060  f8 7a b0 a1 24 fc 9a 57  a2 31 30 f8 29 26 40 28  |.z..$..W.10.)&@(|\r\n00000070  96 00 60 39 ac 5e 6e b0  bf 10 03 18 e3 b4 5f 97  |..`9.^n......._.|\r\n00000080  5a 87 30 0e c5 11 14 ac  e2 b2 26 a6 af 1a fb 14  |Z.0.......&.....|\r\n00000090  8c 5c 2c e3 84 cf ea aa  3c 6c bd a8 a9 ce 11 7a  |.\\,.....<l.....z|\r\n"}]}}, "7f554d356aa941dcb30715d2781967e1": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_a950fbed89614073b96d735fb14bb2d3", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nascii2binary -t sq < 10num.txt > 10num.bin\r\n"}]}}, "826a17abf7e940b298e03373c2faf88a": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_e33a286e72f94232a985e1b6639453d5", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nld -g  usesum.o sumit.o -o usesum\r\n"}]}}, "89603e7fbfa6499c85388eb0198b756d": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_37cf2bc1bb36435c97fe9268a073da73", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ od -t d8 100randomnum.bin | head -10\n0000000 -8355810024472232659   481407472972566552\r\n0000020  7753284691285076479  -935832514409738616\r\n0000040  3545525995787606039 -4422905581806697198\r\n0000060  4502784717113351802  3128581402066625969\r\n0000100  3772636936165625708 -6163808526922633631\r\n0000120  8818964476492267290   -26065771372348587\r\n0000140  6312635061974891256  2900360121726022050\r\n0000160 -5733541181806083946 -7539108363741491009\r\n0000200 -6047188861607442598  1511831441622086370\r\n0000220 -6130859773057540980  8796038775307070524\r\n"}]}}, "8e09fb29b7234f44b75719575f1f0443": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_92b1d5207fdf4b2b8eb62c8e82045004", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\ndd if=/dev/urandom of=100randomnum.bin bs=1 count=800\r\n800+0 records in\r\n800+0 records out\r\n800 bytes copied, 0.00188519 s, 424 kB/s\r\n"}]}}, "8f1632e70caa44e094571d1f8474e493": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_d4dc3d0b0fea4b41b32c6c4a9152421a", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nas -g  usesum.s -o usesum.o\r\n"}]}}, "92b1d5207fdf4b2b8eb62c8e82045004": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "a950fbed89614073b96d735fb14bb2d3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "b93b5c0c5b174a3b9474291faaf1b6ea": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "c9c5dbc27b444107aa190fc891fc5666": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_f73ee9055eca42e7a6da28ebc19e8dcf", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ hexdump -C 10num.bin\n00000000  01 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|\r\n00000010  01 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|\r\n00000020  01 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|\r\n00000030  01 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00  |................|\r\n00000040  08 00 00 00 00 00 00 00  ef ff ff ff ff ff ff ff  |................|\r\n00000050\r\n"}]}}, "d4dc3d0b0fea4b41b32c6c4a9152421a": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "e33a286e72f94232a985e1b6639453d5": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "f73ee9055eca42e7a6da28ebc19e8dcf": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./assembly"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="L09.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">9. </span>UC-SLS Lecture 9 : Assembly : Operations and Data Types</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="L11.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>SLS Lecture 11 :  Program Anatomy II : Functions</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

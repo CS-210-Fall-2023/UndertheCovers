@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>3. UNIX Process, I/O and Credentials &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. SLS Lecture 4 : Editors, Make and Terminal IDEs" href="L04.html" />
+    <link rel="prev" title="2. SLS Lecture 2 : Shell Part II : Programming, Files and Directories" href="L02.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_ln.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specfic Introductions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_210_JA.html">
+   CS210 Computer Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_400_F21_JA.html">
+   CS400 Fall 2021 : Machine Level Programming
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Viewing Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lnhowto.html">
+   How to “view” lecture notes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../howto.html">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="L01.html">
+   1. SLS: Part I - UNIX : Introduction &amp;  Preliminaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L02.html">
+   2. SLS Lecture 2 : Shell Part II : Programming, Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   3. UNIX Process, I/O and Credentials
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L04.html">
+   4. SLS Lecture 4 : Editors, Make and Terminal IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L05.html">
+   5. SLS Lecture 5a : Version Control and GIT: Part I”
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L06.html">
+   6. SLS Lecture 5b : Version Control and GIT: Part II”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L07.html">
+   7. SLS Lecture 7 : Assembly Programming Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L08.html">
+   8. SLS Lecture 8 :  Writing some simple assembly programs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L09.html">
+   9. UC-SLS Lecture 9 : Assembly : Operations and Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L10.html">
+   10. SLS Lecture 10 : Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L11.html">
+   11. SLS Lecture 11 :  Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L12.html">
+   12. SLS Lecture 12 : Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L13.html">
+   13. SLS Lecture 13 : Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L14.html">
+   14. SLS Lecture 14 : Assembly using the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L15.html">
+   15. SLS Lecture 15 : Processes and Virtual Memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/L16.html">
+   16. SLS Lecture 16 : Caches : Constructing them from first principles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L17.html">
+   17. UC-SLS Lecuture 17 : In to the Light - C Intro
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L18.html">
+   18. UC-SLS Lecture 18 : Using C to write and organize opcode bytes - Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L19.html">
+   19. UC-SLS Lecture 19 : Using C to map and organize our data bytes - Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L20.html">
+   20. UC-SLS Lecture 20 : Using LibC to access the OS and escape the confines our process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L21.html">
+   21. UC-SLS Lecture 21 : The rest of LibC and other libraries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L22.html">
+   22. SLS Lecture 22 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L23.html">
+   23. SLS Lecture 23 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L24.html">
+   24. SLS Lecture 24 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L25.html">
+   25. SLS Lecture 25 : Topics
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/unix/L03.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#processes-files-and-streams">
+   3.1. Processes, Files and Streams
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-is-a-process-in-more-detail-and-what-can-it-do">
+     3.1.1. What is a process in more detail and what can it do
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#processes-files-and-channel-stream-model-of-i-o">
+     3.1.2. Processes, Files and channel/stream model of I/O
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#files-and-kernel-objects">
+       3.1.2.1. Files and Kernel objects
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#streams-processes-and-files">
+     3.1.3. Streams: Processes and Files
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shell-syntax">
+     3.1.4. Shell Syntax:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#we-now-can-understand-what-a-pipe-is">
+     3.1.5. We now can understand what a pipe is
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1.6. Shell Syntax:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-management">
+   3.2. Process management
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#credentials-and-file-permissions">
+   3.3. Credentials and file permissions
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>UNIX Process, I/O and Credentials</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#processes-files-and-streams">
+   3.1. Processes, Files and Streams
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#what-is-a-process-in-more-detail-and-what-can-it-do">
+     3.1.1. What is a process in more detail and what can it do
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#processes-files-and-channel-stream-model-of-i-o">
+     3.1.2. Processes, Files and channel/stream model of I/O
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#files-and-kernel-objects">
+       3.1.2.1. Files and Kernel objects
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#streams-processes-and-files">
+     3.1.3. Streams: Processes and Files
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shell-syntax">
+     3.1.4. Shell Syntax:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#we-now-can-understand-what-a-pipe-is">
+     3.1.5. We now can understand what a pipe is
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1.6. Shell Syntax:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#process-management">
+   3.2. Process management
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#credentials-and-file-permissions">
+   3.3. Credentials and file permissions
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="unix-process-i-o-and-credentials">
+<h1><span class="section-number">3. </span>UNIX Process, I/O and Credentials<a class="headerlink" href="#unix-process-i-o-and-credentials" title="Permalink to this headline">#</a></h1>
+<hr><a class="reference internal image-reference" href="../_images/Processes.001.png"><img alt="../_images/Processes.001.png" src="../_images/Processes.001.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/syscalls.png"><img alt="../_images/syscalls.png" src="../_images/syscalls.png" style="width: 100%;" /></a>
+<section id="processes-files-and-streams">
+<h2><span class="section-number">3.1. </span>Processes, Files and Streams<a class="headerlink" href="#processes-files-and-streams" title="Permalink to this headline">#</a></h2>
+<section id="what-is-a-process-in-more-detail-and-what-can-it-do">
+<h3><span class="section-number">3.1.1. </span>What is a process in more detail and what can it do<a class="headerlink" href="#what-is-a-process-in-more-detail-and-what-can-it-do" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>a running program</p>
+<ul>
+<li><p>a process can launch other processes</p>
+<ul>
+<li><p>bash is implemented to  start commands as processes (when needed)</p></li>
+<li><p>passes command line arguments and environment variables – a set of key value pairs Eg.</p>
+<ul>
+<li><p>x=cool</p></li>
+<li><p>HOME=/home/jovyan</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.002.png"><img alt="../_images/Processes.002.png" src="../_images/Processes.002.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.003.png"><img alt="../_images/Processes.003.png" src="../_images/Processes.003.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.004.png"><img alt="../_images/Processes.004.png" src="../_images/Processes.004.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.005.png"><img alt="../_images/Processes.005.png" src="../_images/Processes.005.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.006.png"><img alt="../_images/Processes.006.png" src="../_images/Processes.006.png" style="width: 100%;" /></a>
+</section>
+<section id="processes-files-and-channel-stream-model-of-i-o">
+<h3><span class="section-number">3.1.2. </span>Processes, Files and channel/stream model of I/O<a class="headerlink" href="#processes-files-and-channel-stream-model-of-i-o" title="Permalink to this headline">#</a></h3>
+<section id="files-and-kernel-objects">
+<h4><span class="section-number">3.1.2.1. </span>Files and Kernel objects<a class="headerlink" href="#files-and-kernel-objects" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>read, write</p></li>
+<li><p>everything is a file</p></li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.007.png"><img alt="../_images/Processes.007.png" src="../_images/Processes.007.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.008.png"><img alt="../_images/Processes.008.png" src="../_images/Processes.008.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.009.png"><img alt="../_images/Processes.009.png" src="../_images/Processes.009.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.010.png"><img alt="../_images/Processes.010.png" src="../_images/Processes.010.png" style="width: 100%;" /></a>
+</section>
+</section>
+<section id="streams-processes-and-files">
+<h3><span class="section-number">3.1.3. </span>Streams: Processes and Files<a class="headerlink" href="#streams-processes-and-files" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>open :  attach a file as a stream</p></li>
+<li><p>file descriptors/handles : stream</p>
+<ul>
+<li><p>read and write bytes to a stream</p></li>
+<li><p>close</p></li>
+<li><p>dup</p></li>
+</ul>
+</li>
+<li><p>standard input, standard output, standard error</p></li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.011.png"><img alt="../_images/Processes.011.png" src="../_images/Processes.011.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.012.png"><img alt="../_images/Processes.012.png" src="../_images/Processes.012.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.013.png"><img alt="../_images/Processes.013.png" src="../_images/Processes.013.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.014.png"><img alt="../_images/Processes.014.png" src="../_images/Processes.014.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.015.png"><img alt="../_images/Processes.015.png" src="../_images/Processes.015.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.016.png"><img alt="../_images/Processes.016.png" src="../_images/Processes.016.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.017.png"><img alt="../_images/Processes.017.png" src="../_images/Processes.017.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.018.png"><img alt="../_images/Processes.018.png" src="../_images/Processes.018.png" style="width: 100%;" /></a>
+</section>
+<section id="shell-syntax">
+<h3><span class="section-number">3.1.4. </span>Shell Syntax:<a class="headerlink" href="#shell-syntax" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">'Hello</span> <span class="pre">world'</span> <span class="pre">&gt;</span> <span class="pre">hello</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">hello</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">&lt;</span> <span class="pre">./hello</span></code></p></li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.019.png"><img alt="../_images/Processes.019.png" src="../_images/Processes.019.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.020.png"><img alt="../_images/Processes.020.png" src="../_images/Processes.020.png" style="width: 100%;" /></a>
+<hr></section>
+<section id="we-now-can-understand-what-a-pipe-is">
+<h3><span class="section-number">3.1.5. </span>We now can understand what a pipe is<a class="headerlink" href="#we-now-can-understand-what-a-pipe-is" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>pipe file object</p>
+<ul>
+<li><p>Process 1 stdout into pipe and Process 2 stdin from pipe</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id1">
+<h3><span class="section-number">3.1.6. </span>Shell Syntax:<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-1</span> <span class="pre">|</span> <span class="pre">wc</span> <span class="pre">-l</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-1</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">'^l*'</span> <span class="pre">|</span> <span class="pre">wc</span> <span class="pre">-l</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mknod</span> <span class="pre">mypipe</span> <span class="pre">p</span></code> and <code class="docutils literal notranslate"><span class="pre">mkfifo</span> <span class="pre">mypipe</span></code></p></li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.021.png"><img alt="../_images/Processes.021.png" src="../_images/Processes.021.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.022.png"><img alt="../_images/Processes.022.png" src="../_images/Processes.022.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.023.png"><img alt="../_images/Processes.023.png" src="../_images/Processes.023.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.024.png"><img alt="../_images/Processes.024.png" src="../_images/Processes.024.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.025.png"><img alt="../_images/Processes.025.png" src="../_images/Processes.025.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.026.png"><img alt="../_images/Processes.026.png" src="../_images/Processes.026.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.027.png"><img alt="../_images/Processes.027.png" src="../_images/Processes.027.png" style="width: 100%;" /></a>
+</section>
+</section>
+<section id="process-management">
+<h2><span class="section-number">3.2. </span>Process management<a class="headerlink" href="#process-management" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ps</span></code> - look at all processes</p></li>
+<li><p>The shell and its children</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code> : foreground and background</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ctrl-z</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jobs</span></code></p></li>
+</ul>
+</li>
+<li><p>so we know how to start process, list them how about stopping</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">kill</span></code></p></li>
+<li><p>signals</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">ctrl-c</span></code></p></li>
+</ul>
+</li>
+<li><p>or without prejudice</p></li>
+</ul>
+</li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.028.png"><img alt="../_images/Processes.028.png" src="../_images/Processes.028.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.029.png"><img alt="../_images/Processes.029.png" src="../_images/Processes.029.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.030.png"><img alt="../_images/Processes.030.png" src="../_images/Processes.030.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.031.png"><img alt="../_images/Processes.031.png" src="../_images/Processes.031.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.032.png"><img alt="../_images/Processes.032.png" src="../_images/Processes.032.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.033.png"><img alt="../_images/Processes.033.png" src="../_images/Processes.033.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.034.png"><img alt="../_images/Processes.034.png" src="../_images/Processes.034.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.035.png"><img alt="../_images/Processes.035.png" src="../_images/Processes.035.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.036.png"><img alt="../_images/Processes.036.png" src="../_images/Processes.036.png" style="width: 100%;" /></a>
+</section>
+<section id="credentials-and-file-permissions">
+<h2><span class="section-number">3.3. </span>Credentials and file permissions<a class="headerlink" href="#credentials-and-file-permissions" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>Process have id’s associated with them</p>
+<ul>
+<li><p>a single user id : <code class="docutils literal notranslate"><span class="pre">id</span></code></p>
+<ul>
+<li><p>a single number that maps to a string user name (<code class="docutils literal notranslate"><span class="pre">/etc/passwd</span></code>)</p></li>
+</ul>
+</li>
+<li><p>set of group ids</p>
+<ul>
+<li><p>user has a primary group but can be in many secondary groups</p></li>
+<li><p>each has a number that maps to a name (<code class="docutils literal notranslate"><span class="pre">/etc/group</span></code>)</p></li>
+<li><p>each group can have many users</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">auxgww</span></code></p>
+<ul>
+<li><p>process’s inherit their ids from their parent</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.037.png"><img alt="../_images/Processes.037.png" src="../_images/Processes.037.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.038.png"><img alt="../_images/Processes.038.png" src="../_images/Processes.038.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.039.png"><img alt="../_images/Processes.039.png" src="../_images/Processes.039.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.040.png"><img alt="../_images/Processes.040.png" src="../_images/Processes.040.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.041.png"><img alt="../_images/Processes.041.png" src="../_images/Processes.041.png" style="width: 100%;" /></a>
+<ul class="simple">
+<li><p>Files have id’s and permissions <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code>, <code class="docutils literal notranslate"><span class="pre">chmod</span></code>, <code class="docutils literal notranslate"><span class="pre">chown</span></code>, and <code class="docutils literal notranslate"><span class="pre">chgrp</span></code></p>
+<ul>
+<li><p>user, group, other -&gt; read, write, execute</p></li>
+<li><p>kernel ensures that process id’s and requested operations match permissions</p></li>
+</ul>
+</li>
+</ul>
+<hr><a class="reference internal image-reference" href="../_images/Processes.042.png"><img alt="../_images/Processes.042.png" src="../_images/Processes.042.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.043.png"><img alt="../_images/Processes.043.png" src="../_images/Processes.043.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.044.png"><img alt="../_images/Processes.044.png" src="../_images/Processes.044.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.045.png"><img alt="../_images/Processes.045.png" src="../_images/Processes.045.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.046.png"><img alt="../_images/Processes.046.png" src="../_images/Processes.046.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.047.png"><img alt="../_images/Processes.047.png" src="../_images/Processes.047.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.048.png"><img alt="../_images/Processes.048.png" src="../_images/Processes.048.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.049.png"><img alt="../_images/Processes.049.png" src="../_images/Processes.049.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/Processes.050.png"><img alt="../_images/Processes.050.png" src="../_images/Processes.050.png" style="width: 100%;" /></a>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./unix"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="L02.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">2. </span>SLS Lecture 2 : Shell Part II : Programming, Files and Directories</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="L04.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>SLS Lecture 4 : Editors, Make and Terminal IDEs</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

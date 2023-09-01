@@ -1,0 +1,1775 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>9. UC-SLS Lecture 9 : Assembly : Operations and Data Types &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="10. SLS Lecture 10 : Assembly : Program Anatomy I" href="L10.html" />
+    <link rel="prev" title="8. SLS Lecture 8 : Writing some simple assembly programs" href="L08.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_ln.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specfic Introductions
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_210_JA.html">
+   CS210 Computer Systems
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../L00_400_F21_JA.html">
+   CS400 Fall 2021 : Machine Level Programming
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Viewing Lectures
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../lnhowto.html">
+   How to “view” lecture notes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../howto.html">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L01.html">
+   1. SLS: Part I - UNIX : Introduction &amp;  Preliminaries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L02.html">
+   2. SLS Lecture 2 : Shell Part II : Programming, Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L03.html">
+   3. UNIX Process, I/O and Credentials
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L04.html">
+   4. SLS Lecture 4 : Editors, Make and Terminal IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L05.html">
+   5. SLS Lecture 5a : Version Control and GIT: Part I”
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/L06.html">
+   6. SLS Lecture 5b : Version Control and GIT: Part II”
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="L07.html">
+   7. SLS Lecture 7 : Assembly Programming Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L08.html">
+   8. SLS Lecture 8 :  Writing some simple assembly programs
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   9. UC-SLS Lecture 9 : Assembly : Operations and Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L10.html">
+   10. SLS Lecture 10 : Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L11.html">
+   11. SLS Lecture 11 :  Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L12.html">
+   12. SLS Lecture 12 : Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L13.html">
+   13. SLS Lecture 13 : Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L14.html">
+   14. SLS Lecture 14 : Assembly using the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L15.html">
+   15. SLS Lecture 15 : Processes and Virtual Memory
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="L16.html">
+   16. SLS Lecture 16 : Caches : Constructing them from first principles
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L17.html">
+   17. UC-SLS Lecuture 17 : In to the Light - C Intro
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L18.html">
+   18. UC-SLS Lecture 18 : Using C to write and organize opcode bytes - Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L19.html">
+   19. UC-SLS Lecture 19 : Using C to map and organize our data bytes - Data Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L20.html">
+   20. UC-SLS Lecture 20 : Using LibC to access the OS and escape the confines our process
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L21.html">
+   21. UC-SLS Lecture 21 : The rest of LibC and other libraries
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L22.html">
+   22. SLS Lecture 22 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L23.html">
+   23. SLS Lecture 23 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L24.html">
+   24. SLS Lecture 24 : Topics
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../C/L25.html">
+   25. SLS Lecture 25 : Topics
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/assembly/L09.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-start-with-some-preliminaries-about-bytes">
+   9.1. Let’s start with some preliminaries about Bytes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#we-need-some-notation">
+   9.2. We need some notation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectors-of-bits">
+     9.2.1. Vectors of bits
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beyond-8-bits">
+     9.2.2. Beyond 8 bits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-program-is-bytes-and-manipulates-bytes">
+   9.3. A program is bytes and manipulates bytes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-more-word-about-integers">
+   9.4. One more word about integers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#programming-homework">
+   9.5. Programming Homework
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-simple-mov-s-program">
+   9.6. A simple mov.S program
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     9.6.1. Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assemble-mov-s-into-mov-o-directly-with-assembler-as">
+     9.6.2. Assemble
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.S
+      </span>
+     </code>
+     into
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.o
+      </span>
+     </code>
+     directly with assembler (as)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mov-o-is-not-an-executable">
+       9.6.2.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mov.o
+        </span>
+       </code>
+       is NOT an executable
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-kind-of-file-is-is-it">
+       9.6.2.2. What kind of file is is it?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#examine-symbol-table">
+       9.6.2.3. Examine Symbol Table
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#link-mov-o-to-produce-the-binary-mov-with-linker-ld">
+     9.6.3. Link
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.o
+      </span>
+     </code>
+     to produce the binary
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov
+      </span>
+     </code>
+     with linker (ld)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-debugger-to-explore">
+     9.6.4. Use debugger to explore
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rebuild-with-more-debug-info-g">
+       9.6.4.1. rebuild with more debug info
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         -g
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-gdb-and-poke-around">
+     9.6.5. start gdb and poke around
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#formally-getting-started-with-assembly-programming-syntax">
+   9.7. Formally getting started with Assembly Programming Syntax
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assembly-instruction-statement-syntax">
+   9.8. Assembly Instruction Statement Syntax
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#labels">
+     9.8.1. Labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sources-and-destinations-operand-addressing">
+     9.8.2. Sources and destinations (Operand Addressing)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#addressing-modes-for-sources-and-destinations">
+   9.9. Addressing Modes for sources and destinations
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-intel-mov-instruction">
+     9.9.1. The INTEL
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov
+      </span>
+     </code>
+     instruction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#destinations-and-sources">
+     9.9.2. destinations and sources
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizes">
+       9.9.2.1. Sizes
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specifying-memory-locations-is-subtle-effective-address">
+       9.9.2.2. Specifying memory locations is subtle – Effective Address
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specifying-and-offset-address-to-be-used-to-locate-the-operand-value">
+       9.9.2.3. Specifying and offset/address to be used to locate the operand value
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intel-syntax-examples">
+     9.9.3. Intel Syntax examples
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#move-examples">
+   9.10. Move examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-your-knowledge">
+   9.11. Test your knowledge
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>UC-SLS Lecture 9 : Assembly : Operations and Data Types</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#let-s-start-with-some-preliminaries-about-bytes">
+   9.1. Let’s start with some preliminaries about Bytes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#we-need-some-notation">
+   9.2. We need some notation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#vectors-of-bits">
+     9.2.1. Vectors of bits
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#beyond-8-bits">
+     9.2.2. Beyond 8 bits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-program-is-bytes-and-manipulates-bytes">
+   9.3. A program is bytes and manipulates bytes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#one-more-word-about-integers">
+   9.4. One more word about integers
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#programming-homework">
+   9.5. Programming Homework
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#a-simple-mov-s-program">
+   9.6. A simple mov.S program
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#setup">
+     9.6.1. Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#assemble-mov-s-into-mov-o-directly-with-assembler-as">
+     9.6.2. Assemble
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.S
+      </span>
+     </code>
+     into
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.o
+      </span>
+     </code>
+     directly with assembler (as)
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#mov-o-is-not-an-executable">
+       9.6.2.1.
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         mov.o
+        </span>
+       </code>
+       is NOT an executable
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#what-kind-of-file-is-is-it">
+       9.6.2.2. What kind of file is is it?
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#examine-symbol-table">
+       9.6.2.3. Examine Symbol Table
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#link-mov-o-to-produce-the-binary-mov-with-linker-ld">
+     9.6.3. Link
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov.o
+      </span>
+     </code>
+     to produce the binary
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov
+      </span>
+     </code>
+     with linker (ld)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#use-debugger-to-explore">
+     9.6.4. Use debugger to explore
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#rebuild-with-more-debug-info-g">
+       9.6.4.1. rebuild with more debug info
+       <code class="docutils literal notranslate">
+        <span class="pre">
+         -g
+        </span>
+       </code>
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#start-gdb-and-poke-around">
+     9.6.5. start gdb and poke around
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#formally-getting-started-with-assembly-programming-syntax">
+   9.7. Formally getting started with Assembly Programming Syntax
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assembly-instruction-statement-syntax">
+   9.8. Assembly Instruction Statement Syntax
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#labels">
+     9.8.1. Labels
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sources-and-destinations-operand-addressing">
+     9.8.2. Sources and destinations (Operand Addressing)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#addressing-modes-for-sources-and-destinations">
+   9.9. Addressing Modes for sources and destinations
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-intel-mov-instruction">
+     9.9.1. The INTEL
+     <code class="docutils literal notranslate">
+      <span class="pre">
+       mov
+      </span>
+     </code>
+     instruction
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#destinations-and-sources">
+     9.9.2. destinations and sources
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sizes">
+       9.9.2.1. Sizes
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specifying-memory-locations-is-subtle-effective-address">
+       9.9.2.2. Specifying memory locations is subtle – Effective Address
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#specifying-and-offset-address-to-be-used-to-locate-the-operand-value">
+       9.9.2.3. Specifying and offset/address to be used to locate the operand value
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intel-syntax-examples">
+     9.9.3. Intel Syntax examples
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#move-examples">
+   9.10. Move examples
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#test-your-knowledge">
+   9.11. Test your knowledge
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="uc-sls-lecture-9-assembly-operations-and-data-types">
+<h1><span class="section-number">9. </span>UC-SLS Lecture 9 : Assembly : Operations and Data Types<a class="headerlink" href="#uc-sls-lecture-9-assembly-operations-and-data-types" title="Permalink to this headline">#</a></h1>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.029.png"><img alt="../_images/ASSEMBLY-PGMI.029.png" src="../_images/ASSEMBLY-PGMI.029.png" style="width: 100%;" /></a>
+<hr><section id="let-s-start-with-some-preliminaries-about-bytes">
+<h2><span class="section-number">9.1. </span>Let’s start with some preliminaries about Bytes<a class="headerlink" href="#let-s-start-with-some-preliminaries-about-bytes" title="Permalink to this headline">#</a></h2>
+</section>
+<section id="we-need-some-notation">
+<h2><span class="section-number">9.2. </span>We need some notation<a class="headerlink" href="#we-need-some-notation" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://jappavoo.github.io/UndertheCovers/textbook/assembly/InfoRepI.html">UC-SLS:Representing information - Preliminaries: Bits, Bytes and Notation</a></p>
+<section id="vectors-of-bits">
+<h3><span class="section-number">9.2.1. </span>Vectors of bits<a class="headerlink" href="#vectors-of-bits" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Byte a vector of 8 bits</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+[b_7 b_6 b_5 b_4 b_3 b_2 b_1 b_0] \; \text{where} \; b_i \in \{0,1\}
+\]</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="overflow:scroll; display: table; margin:auto auto;"><style type="text/css">
+#T_e6634 td {
+  border: 4px solid #cccccc;
+  font-size: 3vw;
+  text-align: center;
+  overflow-x: hidden;
+}
+#T_e6634 th {
+  font-size: 1.5vw;
+  text-align: center;
+  font-weight: bold;
+  border: solid #cccccc;
+  color: black;
+  background-color: white;
+}
+#T_e6634 td:hover {
+  background-color: white;
+  color: black;
+}
+#T_e6634 tr:hover {
+  background-color: #11cccccc;
+  border: 4px solid red;
+}
+#T_e6634 th:hover {
+  border: solid red;
+}
+#T_e6634 thead tr:nth-child(1) th {
+  position: sticky;
+  background-color: inherit;
+  top: 0px;
+  z-index: 2;
+}
+#T_e6634  {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<table id="T_e6634">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_e6634_level0_col0" class="col_heading level0 col0" >[<em>b<sub>7</sub></em></th>
+      <th id="T_e6634_level0_col1" class="col_heading level0 col1" ><em>b<sub>6</sub></em></th>
+      <th id="T_e6634_level0_col2" class="col_heading level0 col2" ><em>b<sub>5</sub></em></th>
+      <th id="T_e6634_level0_col3" class="col_heading level0 col3" ><em>b<sub>4</sub></em></th>
+      <th id="T_e6634_level0_col4" class="col_heading level0 col4" ><em>b<sub>3</sub></em></th>
+      <th id="T_e6634_level0_col5" class="col_heading level0 col5" ><em>b<sub>2</sub></em></th>
+      <th id="T_e6634_level0_col6" class="col_heading level0 col6" ><em>b<sub>1</sub></em></th>
+      <th id="T_e6634_level0_col7" class="col_heading level0 col7" ><em>b<sub>0</sub></em>]</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_e6634_level0_row0" class="row_heading level0 row0" >ALL OFF</th>
+      <td id="T_e6634_row0_col0" class="data row0 col0" >0</td>
+      <td id="T_e6634_row0_col1" class="data row0 col1" >0</td>
+      <td id="T_e6634_row0_col2" class="data row0 col2" >0</td>
+      <td id="T_e6634_row0_col3" class="data row0 col3" >0</td>
+      <td id="T_e6634_row0_col4" class="data row0 col4" >0</td>
+      <td id="T_e6634_row0_col5" class="data row0 col5" >0</td>
+      <td id="T_e6634_row0_col6" class="data row0 col6" >0</td>
+      <td id="T_e6634_row0_col7" class="data row0 col7" >0</td>
+    </tr>
+    <tr>
+      <th id="T_e6634_level0_row1" class="row_heading level0 row1" >ALL ON</th>
+      <td id="T_e6634_row1_col0" class="data row1 col0" >1</td>
+      <td id="T_e6634_row1_col1" class="data row1 col1" >1</td>
+      <td id="T_e6634_row1_col2" class="data row1 col2" >1</td>
+      <td id="T_e6634_row1_col3" class="data row1 col3" >1</td>
+      <td id="T_e6634_row1_col4" class="data row1 col4" >1</td>
+      <td id="T_e6634_row1_col5" class="data row1 col5" >1</td>
+      <td id="T_e6634_row1_col6" class="data row1 col6" >1</td>
+      <td id="T_e6634_row1_col7" class="data row1 col7" >1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Natural to define value, as a non-negative integer (UINT), as the positional sum of powers of two as follows:</p>
+<div class="math notranslate nohighlight">
+\[ 
+\sum_{i=0}^{7} b_i \times 2^{i}
+\]</div>
+<div class="math notranslate nohighlight">
+\[ [10010011] \]</div>
+<div class="math notranslate nohighlight">
+\[ 1\times2^7 + 0 \times  2^6  + 0 \times 2^5 + 1 \times 2^4 + 0 \times 2^3 + 0 \times 2^2 + 1 \times 2^1 + 1 \times 2^0 \]</div>
+<div class="math notranslate nohighlight">
+\[ (2*2*2*2*2*2*2)  + 0 + 0 + (2*2*2*2) + 0 + 0 + 2 + 1 \]</div>
+<div class="math notranslate nohighlight">
+\[ 128 + 32 + 2 + 1 \]</div>
+<div class="math notranslate nohighlight">
+\[ 147 \]</div>
+</section>
+<section id="beyond-8-bits">
+<h3><span class="section-number">9.2.2. </span>Beyond 8 bits<a class="headerlink" href="#beyond-8-bits" title="Permalink to this headline">#</a></h3>
+<p>More generally <span class="math notranslate nohighlight">\(n\)</span>-bit binary vector</p>
+<div class="math notranslate nohighlight">
+\[ 
+X_{n} \equiv [ x_{n-1} x_{n-2} \ldots x_{0} ] 
+\]</div>
+<div class="math notranslate nohighlight">
+\[ 
+\sum_{i=0}^{n-1} b_i \times 2^{i}
+\]</div>
+<p>Standard lengths are certain multiples of 8</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Multiplication</p></th>
+<th class="head"><p>Number of Bits</p></th>
+<th class="head"><p>Notation</p></th>
+<th class="head"><p>Names</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(1 \times 8\)</span></p></td>
+<td><p>8 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{8}\)</span></p></td>
+<td><p>Byte, C: unsigned  char</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(2 \times 8\)</span></p></td>
+<td><p>16 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{16}\)</span></p></td>
+<td><p>INTEL: Word, ARM: Half Word, C: unsigned short</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(4 \times 8\)</span></p></td>
+<td><p>32 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{32}\)</span></p></td>
+<td><p>INTEL: Double Word, ARM: Word, C: unsigned int</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(8 \times 8\)</span></p></td>
+<td><p>64 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{64}\)</span></p></td>
+<td><p>INTEL: Quad Word, ARM: Double Word, C: unsigned long long</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(16 \times 8\)</span></p></td>
+<td><p>128 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{128}\)</span></p></td>
+<td><p>INTEL: Double Quad Word, ARM: Quad Word</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(32 \times 8\)</span></p></td>
+<td><p>256 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{256}\)</span></p></td>
+<td><p>?</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(64 \times 8\)</span></p></td>
+<td><p>512 bits</p></td>
+<td><p><span class="math notranslate nohighlight">\(X_{512}\)</span></p></td>
+<td><p>?</p></td>
+</tr>
+</tbody>
+</table>
+<ol class="simple">
+<li><p>Memory is an array of bytes</p></li>
+<li><p>Registers vary in their sizes depends on the CPU</p></li>
+</ol>
+</section>
+</section>
+<section id="a-program-is-bytes-and-manipulates-bytes">
+<h2><span class="section-number">9.3. </span>A program is bytes and manipulates bytes<a class="headerlink" href="#a-program-is-bytes-and-manipulates-bytes" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>code is represented with bytes</p></li>
+<li><p>data is represented with bytes</p></li>
+<li><p>CPU operations are encoded with bytes</p>
+<ul>
+<li><p>byte oriented operations of CPU are our building blocks</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="one-more-word-about-integers">
+<h2><span class="section-number">9.4. </span>One more word about integers<a class="headerlink" href="#one-more-word-about-integers" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>As humans we very quickly become comfortable with the idea of negative quantities</p></li>
+<li><p>But what does negative and positive “mean” when dealing with binary vectors</p>
+<ul>
+<li><p>CPUs default support is for unsigned <span class="math notranslate nohighlight">\(n\)</span> bit integers <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(2^{n} - 1\)</span></p>
+<ul>
+<li><p>add, subtract, bitwise and, bitwise or, compare, etc</p></li>
+</ul>
+</li>
+<li><p>CPUs typically have special support to for signed integers</p>
+<ul>
+<li><p>a very clever encoding</p>
+<ul>
+<li><p>“2’s Complement” encodes a positive and negative values</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(-2^{n-1}\)</span> to <span class="math notranslate nohighlight">\(2^{n-1}-1\)</span> in <span class="math notranslate nohighlight">\(n\)</span> bits</p></li>
+</ul>
+</li>
+<li><p>As Assembly programmers we will need to carefully know what instructions are sensitive</p>
+<ul>
+<li><p>does NOT matter</p>
+<ul>
+<li><p>add, subtract, bitwise and, bitwise or</p></li>
+</ul>
+</li>
+<li><p>does matter</p>
+<ul>
+<li><p>operations that depend on comparison (eg less than, greater than)</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>punt on the details of 2’s complement till later</p></li>
+<li><p>we will assume signed values and focus on when it matters</p></li>
+</ul>
+</li>
+</ul>
+<a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.030.png"><img alt="../_images/ASSEMBLY-PGMI.030.png" src="../_images/ASSEMBLY-PGMI.030.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.031.png"><img alt="../_images/ASSEMBLY-PGMI.031.png" src="../_images/ASSEMBLY-PGMI.031.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.032.png"><img alt="../_images/ASSEMBLY-PGMI.032.png" src="../_images/ASSEMBLY-PGMI.032.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.033.png"><img alt="../_images/ASSEMBLY-PGMI.033.png" src="../_images/ASSEMBLY-PGMI.033.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.034.png"><img alt="../_images/ASSEMBLY-PGMI.034.png" src="../_images/ASSEMBLY-PGMI.034.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.035.png"><img alt="../_images/ASSEMBLY-PGMI.035.png" src="../_images/ASSEMBLY-PGMI.035.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.036.png"><img alt="../_images/ASSEMBLY-PGMI.036.png" src="../_images/ASSEMBLY-PGMI.036.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.037.png"><img alt="../_images/ASSEMBLY-PGMI.037.png" src="../_images/ASSEMBLY-PGMI.037.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.038.png"><img alt="../_images/ASSEMBLY-PGMI.038.png" src="../_images/ASSEMBLY-PGMI.038.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.039.png"><img alt="../_images/ASSEMBLY-PGMI.039.png" src="../_images/ASSEMBLY-PGMI.039.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.040.png"><img alt="../_images/ASSEMBLY-PGMI.040.png" src="../_images/ASSEMBLY-PGMI.040.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.041.png"><img alt="../_images/ASSEMBLY-PGMI.041.png" src="../_images/ASSEMBLY-PGMI.041.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.042.png"><img alt="../_images/ASSEMBLY-PGMI.042.png" src="../_images/ASSEMBLY-PGMI.042.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.043.png"><img alt="../_images/ASSEMBLY-PGMI.043.png" src="../_images/ASSEMBLY-PGMI.043.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.045.png"><img alt="../_images/ASSEMBLY-PGMI.045.png" src="../_images/ASSEMBLY-PGMI.045.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.046.png"><img alt="../_images/ASSEMBLY-PGMI.046.png" src="../_images/ASSEMBLY-PGMI.046.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.047.png"><img alt="../_images/ASSEMBLY-PGMI.047.png" src="../_images/ASSEMBLY-PGMI.047.png" style="width: 100%;" /></a>
+<hr><a class="reference internal image-reference" href="../_images/ASSEMBLY-PGMI.048.png"><img alt="../_images/ASSEMBLY-PGMI.048.png" src="../_images/ASSEMBLY-PGMI.048.png" style="width: 100%;" /></a>
+<hr></section>
+<section id="programming-homework">
+<h2><span class="section-number">9.5. </span>Programming Homework<a class="headerlink" href="#programming-homework" title="Permalink to this headline">#</a></h2>
+<p>The following will get us started applying the ideas we have explored by:</p>
+<ol class="simple">
+<li><p>introducing the basic INTEL syntax we will need to write code composed of INTEL cpu instructions</p></li>
+<li><p>introducing the “Addressing Mode” syntax that we use to specify “operands” for our operations</p></li>
+<li><p>learn how to use the <code class="docutils literal notranslate"><span class="pre">mov</span></code> INTEL instruction</p></li>
+<li><p>use gdb to explore binaries created from our code</p></li>
+</ol>
+<hr></section>
+<section id="a-simple-mov-s-program">
+<h2><span class="section-number">9.6. </span>A simple mov.S program<a class="headerlink" href="#a-simple-mov-s-program" title="Permalink to this headline">#</a></h2>
+<section id="setup">
+<h3><span class="section-number">9.6.1. </span>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<ul class="simple">
+<li><p>create a directory <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">mov;</span> <span class="pre">cd</span> <span class="pre">mov</span></code></p></li>
+<li><p>create and write  <code class="docutils literal notranslate"><span class="pre">mov.S</span></code> below</p></li>
+<li><p>add a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> to automate assembling and linking</p>
+<ul>
+<li><p>we are going run the commands by hand this time to highlight the details</p></li>
+</ul>
+</li>
+<li><p>add our <code class="docutils literal notranslate"><span class="pre">setup.gdb</span></code> to make working in gdb easier</p></li>
+<li><p>normally you would want to track everything in git</p></li>
+</ul>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<p><b>CODE: asm - mov.S</p>
+<div style="width:107em; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span><span class="w">	</span><span class="na">.intel_syntax</span><span class="w"> </span><span class="no">noprefix</span><span class="w"></span>
+<span class="w">	</span><span class="na">.text</span><span class="w"></span>
+<span class="w">	</span>
+<span class="w">	</span><span class="na">.equ</span><span class="w"> </span><span class="no">EXIT_SYSCALL_NR</span><span class="p">,</span><span class="mi">60</span><span class="w"></span>
+<span class="w">	</span>
+<span class="w">	</span><span class="na">.global</span><span class="w"> </span><span class="no">_start</span><span class="w"></span>
+<span class="nl">_start:</span><span class="w"></span>
+<span class="w">	</span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="no">b1000</span><span class="w"></span>
+
+<span class="w">	</span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">EXIT_SYSCALL_NR</span><span class="w"></span>
+<span class="w">	</span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="w"></span>
+<span class="w">	</span><span class="nf">syscall</span><span class="w"></span>
+<span class="w">	</span>
+<span class="w">	</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="assemble-mov-s-into-mov-o-directly-with-assembler-as">
+<h3><span class="section-number">9.6.2. </span>Assemble <code class="docutils literal notranslate"><span class="pre">mov.S</span> </code> into <code class="docutils literal notranslate"><span class="pre">mov.o</span></code>  directly with assembler (as)<a class="headerlink" href="#assemble-mov-s-into-mov-o-directly-with-assembler-as" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>we could add <code class="docutils literal notranslate"><span class="pre">-g</span></code> flag to add extra debugger information but lets skip it for now</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "0d233cb82d9b44f493217cb1cab3328b", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<section id="mov-o-is-not-an-executable">
+<h4><span class="section-number">9.6.2.1. </span><code class="docutils literal notranslate"><span class="pre">mov.o</span></code> is NOT an executable<a class="headerlink" href="#mov-o-is-not-an-executable" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "d121659902b3422bb0c6a20d43c51526", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+<section id="what-kind-of-file-is-is-it">
+<h4><span class="section-number">9.6.2.2. </span>What kind of file is is it?<a class="headerlink" href="#what-kind-of-file-is-is-it" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "6551d9dab2a74d3aba60922280ba63a6", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+<section id="examine-symbol-table">
+<h4><span class="section-number">9.6.2.3. </span>Examine Symbol Table<a class="headerlink" href="#examine-symbol-table" title="Permalink to this headline">#</a></h4>
+<p>The assembler records a table, in the output object file, that  containing all the symbols we created in our assembly code.
+In our case, the two lines of our code that introduces symbols were:</p>
+<ol class="simple">
+<li><p>the <code class="docutils literal notranslate"><span class="pre">.equ</span></code> that introduced the symbol <code class="docutils literal notranslate"><span class="pre">EXIT_SYSCALL_NR</span></code> that we explicitly gave a value of decimal 60 to</p></li>
+<li><p>the label line <code class="docutils literal notranslate"><span class="pre">start:</span></code> introduced a symbol whose value is the address in memory of where our <code class="docutils literal notranslate"><span class="pre">mov</span></code> instruction will be placed</p></li>
+</ol>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">objdump</span> <span class="pre">-t</span></code> command to see this table.  It displays one line per symbol with several pieces of information per symbol.
+For now, all we care about, is the first number and the name which appears at the end of the line.
+The first number is the symbols value.  Most of symbols we introduce will be labels (like <code class="docutils literal notranslate"><span class="pre">_start</span></code>).  For labels the value is a location in
+memory – a memory address.   Note by default <code class="docutils literal notranslate"><span class="pre">objdump</span></code> prints values using hexadecimal notation.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7422950848104d909e3d6c4d2d963471", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>Notice in our object file the symbol <code class="docutils literal notranslate"><span class="pre">_start</span></code> has not been assigned a location in memory yet.  This is indicated by the zeros as its value.
+It will be the linker’s job to assign the symbols, that are labels,  their locations in memory and hence give them their final value.</p>
+</section>
+</section>
+<section id="link-mov-o-to-produce-the-binary-mov-with-linker-ld">
+<h3><span class="section-number">9.6.3. </span>Link  <code class="docutils literal notranslate"><span class="pre">mov.o</span></code> to produce the binary <code class="docutils literal notranslate"><span class="pre">mov</span></code> with linker (ld)<a class="headerlink" href="#link-mov-o-to-produce-the-binary-mov-with-linker-ld" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>we don’t really have any other files to link</p></li>
+<li><p>simply need to have linker organize things as per guidelines provided by the Operating Systems</p>
+<ul>
+<li><p>these guidelines are provided in something called a linker script</p></li>
+<li><p>You can use <code class="docutils literal notranslate"><span class="pre">ld</span> <span class="pre">-verbose</span></code> to see the default linker script it uses</p>
+<ul>
+<li><p>if you do look at it beware the syntax is very cryptic</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Use ld to link</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "7ab8535292db431f9d66b1ce813fee2e", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "4c77192cf4084cafa81919393d6c3525", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "8d97728c41e548808d873053d68bcbe3", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "94282ed5bab14cdabb1e2b1558ff8430", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>Notice that the symbol table of the final binary executable, <code class="docutils literal notranslate"><span class="pre">mov</span></code>, has a value assigned for <code class="docutils literal notranslate"><span class="pre">_start</span></code>.  This tells us that the data that we placed after the label will be located at the address that is the symbol’s value.  In our case the address is <code class="docutils literal notranslate"><span class="pre">0x401000</span></code>.  When we use <code class="docutils literal notranslate"><span class="pre">gdb</span></code>, we should find at that address, is the bytes that encode the <code class="docutils literal notranslate"><span class="pre">mov</span></code> instruction we wrote (<code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">rax,</span> <span class="pre">0b1000</span></code>).  This can be tricky at first to keep straight.  A label is assigned a memory address by the linker but the byte values at the location in memory will be generated from the assembly statements we place after the label.  In this way labels are just human names for location’s in memory.  However, at those locations are values that give the location meaning.</p>
+<p>Next when you use <code class="docutils literal notranslate"><span class="pre">gdb</span></code> poke around and try to draw a picture to clarify what is going on.  Try to make sure you can understand the difference between the address of <code class="docutils literal notranslate"><span class="pre">_start</span></code> versus the values of the bytes at that address.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Running our binary:</strong> Since we added the proper exit code we can certainly run out binary but it’s not that interesting.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ./mov
+$ <span class="nb">echo</span> <span class="nv">$?</span>
+<span class="m">2</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="use-debugger-to-explore">
+<h3><span class="section-number">9.6.4. </span>Use debugger to explore<a class="headerlink" href="#use-debugger-to-explore" title="Permalink to this headline">#</a></h3>
+<p>To really learn something from this program we have to explore it with the debugger.`</p>
+<section id="rebuild-with-more-debug-info-g">
+<h4><span class="section-number">9.6.4.1. </span>rebuild with more debug info <code class="docutils literal notranslate"><span class="pre">-g</span></code><a class="headerlink" href="#rebuild-with-more-debug-info-g" title="Permalink to this headline">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "06d4c6d7cb7d4019becff0271003967a", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+</section>
+</section>
+<section id="start-gdb-and-poke-around">
+<h3><span class="section-number">9.6.5. </span>start gdb and poke around<a class="headerlink" href="#start-gdb-and-poke-around" title="Permalink to this headline">#</a></h3>
+<p>gdb -tui mov -x setup.gdb</p>
+<p>Don’t just run the following command blindly.  You are trying to use GDB commands to learn about how things work.</p>
+<ol class="simple">
+<li><p>set a break point at <code class="docutils literal notranslate"><span class="pre">_start</span></code></p></li>
+<li><p>start a process from the binary <code class="docutils literal notranslate"><span class="pre">run</span></code></p></li>
+<li><p>examine the value of <code class="docutils literal notranslate"><span class="pre">rax</span></code> and the pc (<code class="docutils literal notranslate"><span class="pre">rip</span></code>)</p>
+<ul class="simple">
+<li><p>What is the address of the <code class="docutils literal notranslate"><span class="pre">rip</span></code>?</p></li>
+<li><p>What is the address of <code class="docutils literal notranslate"><span class="pre">_start</span></code>?</p></li>
+<li><p>What does <code class="docutils literal notranslate"><span class="pre">disass</span> <span class="pre">_start</span></code> do?</p></li>
+<li><p>What are the values of the bytes at <code class="docutils literal notranslate"><span class="pre">_start</span></code> (use the examine (<code class="docutils literal notranslate"><span class="pre">x/7xb</span> <span class="pre">_start</span></code>))?</p></li>
+</ul>
+</li>
+<li><p>single step on instruction (<code class="docutils literal notranslate"><span class="pre">stepi</span></code>)</p></li>
+<li><p>examine <code class="docutils literal notranslate"><span class="pre">rax</span></code></p></li>
+<li><p>quit the debugger</p></li>
+</ol>
+<p>Now try modifying the code to load a different value, rebuild and use gdb again to explore your new binary.  <strong>Remember to create a binary from your code you must always rerun the assembler and linker to translate it.</strong>  Writing a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> to automate this step will save you a lot of headaches.  All of us change our code and forget to rebuild and wonder why things aren’t working ;-)</p>
+<hr></section>
+</section>
+<section id="formally-getting-started-with-assembly-programming-syntax">
+<h2><span class="section-number">9.7. </span>Formally getting started with Assembly Programming Syntax<a class="headerlink" href="#formally-getting-started-with-assembly-programming-syntax" title="Permalink to this headline">#</a></h2>
+<hr></section>
+<section id="assembly-instruction-statement-syntax">
+<h2><span class="section-number">9.8. </span>Assembly Instruction Statement Syntax<a class="headerlink" href="#assembly-instruction-statement-syntax" title="Permalink to this headline">#</a></h2>
+<p>Lets take a minute to examine the syntax of using the assembler to specify
+CPU operations we want done.  Remember the CPU’s manual provides is with a
+short name called a <strong>mnemonic</strong> is the short-hand name of an operation it
+supports.  These sometime are also called instructions.</p>
+<p>Here is the syntax:</p>
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span>[label:] mnemonic [operands][ # comment ]
+</pre></div>
+</div>
+<p>Anything in square brackets is optional depending on the mnemonic.</p>
+<p>The following are the four types of Intel instructions</p>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mnemonic</span></code> - alone no explicitly defined operands</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mnemonic</span> <span class="pre">&lt;destination&gt;</span></code> - a single operand</p>
+<ul class="simple">
+<li><p>which is the destination … where the result will be stored</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mnemonic</span> <span class="pre">&lt;destination&gt;,</span> <span class="pre">&lt;source&gt;</span></code> - two operands</p></li>
+</ol>
+<ul class="simple">
+<li><p>one that names a source location for input</p></li>
+<li><p>and one that is the destination</p></li>
+</ul>
+<ol class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mnemonic</span> <span class="pre">&lt;destination&gt;,</span> <span class="pre">&lt;source</span> <span class="pre">A&gt;,</span> <span class="pre">&lt;source</span> <span class="pre">B&gt;</span></code> - three operands</p>
+<ul class="simple">
+<li><p>two that name input sources</p></li>
+<li><p>and one that names the destination</p></li>
+</ul>
+</li>
+</ol>
+<section id="labels">
+<h3><span class="section-number">9.8.1. </span>Labels<a class="headerlink" href="#labels" title="Permalink to this headline">#</a></h3>
+<p>By placing a label, before an assembly instruction statement, we are introducing a symbol.  This symbol marks the location where the instruction gets located in memory.
+We can use this symbol in other parts of our code to refer back to the location of where this instruction ends up.  This is really useful when we start writing
+loops, conditional logic, functions etc.</p>
+<hr></section>
+<section id="sources-and-destinations-operand-addressing">
+<h3><span class="section-number">9.8.2. </span>Sources and destinations (Operand Addressing)<a class="headerlink" href="#sources-and-destinations-operand-addressing" title="Permalink to this headline">#</a></h3>
+<p>When we write assembly code the operations like <code class="docutils literal notranslate"><span class="pre">mov</span></code> or <code class="docutils literal notranslate"><span class="pre">add</span></code> will need arguments.  Generically we call the arguments <strong>operands</strong>.
+Some operands specify where the input values for the operation should come from.  Similarly other operands specify where the output value should go.
+We call the inputs <code class="docutils literal notranslate"><span class="pre">sources</span></code> and the output <code class="docutils literal notranslate"><span class="pre">destinations</span></code>.</p>
+<p>Sources and destinations must name both a location of a value and its length.</p>
+<p>-Eg. <code class="docutils literal notranslate"><span class="pre">2</span></code> bytes at Address <code class="docutils literal notranslate"><span class="pre">0x10000</span></code> is the operand for the instruction</p>
+<p>Lets look at this a little more closely.</p>
+<hr></section>
+</section>
+<section id="addressing-modes-for-sources-and-destinations">
+<h2><span class="section-number">9.9. </span>Addressing Modes for sources and destinations<a class="headerlink" href="#addressing-modes-for-sources-and-destinations" title="Permalink to this headline">#</a></h2>
+<ul class="simple">
+<li><p>lets look more closely now at the “address modes” by carefully studying the various ways we can use the <code class="docutils literal notranslate"><span class="pre">mov</span></code> instruction</p>
+<ul>
+<li><p>by looking at the ways that we can specify its <code class="docutils literal notranslate"><span class="pre">operands</span></code></p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>      <span class="n">mov</span> <span class="o">&lt;</span><span class="n">destination</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">&lt;</span><span class="n">source</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;destination&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> are the operands and the <code class="docutils literal notranslate"><span class="pre">mov</span></code> is the mnemonic of instruction we want to encode.</p>
+<section id="the-intel-mov-instruction">
+<h3><span class="section-number">9.9.1. </span>The INTEL <code class="docutils literal notranslate"><span class="pre">mov</span></code> instruction<a class="headerlink" href="#the-intel-mov-instruction" title="Permalink to this headline">#</a></h3>
+<p>Overwrite the <code class="docutils literal notranslate"><span class="pre">&lt;destination&gt;</span></code> with a copy of what is in the <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code></p>
+<ul class="simple">
+<li><p>note the value that was in <code class="docutils literal notranslate"><span class="pre">&lt;destination&gt;</span></code> is <strong>over-written</strong></p>
+<ul>
+<li><p>its “gone”</p></li>
+</ul>
+</li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">&lt;source&gt;</span></code> still has its version</p></li>
+</ul>
+<p>This is actually more like copy than move!</p>
+<p>From a high level programming perspective it is like an assignment statement</p>
+<p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y;</span></code></p>
+</section>
+<section id="destinations-and-sources">
+<h3><span class="section-number">9.9.2. </span>destinations and sources<a class="headerlink" href="#destinations-and-sources" title="Permalink to this headline">#</a></h3>
+<p>Here are the various types of locations that can be a source or destination</p>
+<ol class="simple">
+<li><p>Register  (reg) – one of the processor’s registers</p></li>
+<li><p>Memory    (mem) – an address of an arbitrary memory location</p></li>
+<li><p>Immediate (imm) – a special type of Memory location where the value is in the bytes following the opcode</p>
+<ul class="simple">
+<li><p>You can only use Immediates as a source</p></li>
+</ul>
+</li>
+</ol>
+<p>Here is the valid combinations that you can have</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">&lt;reg&gt;,</span> <span class="pre">&lt;reg&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">&lt;reg&gt;,</span> <span class="pre">&lt;mem&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">&lt;mem&gt;,</span> <span class="pre">&lt;reg&gt;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mov</span> <span class="pre">&lt;reg&gt;,</span> <span class="pre">&lt;imm&gt;</span></code></p></li>
+</ul>
+<p>What is missing?</p>
+<section id="sizes">
+<h4><span class="section-number">9.9.2.1. </span>Sizes<a class="headerlink" href="#sizes" title="Permalink to this headline">#</a></h4>
+<ul class="simple">
+<li><p>Register names specify size of location</p>
+<ul>
+<li><p>The rules for mixing is a little subtle (eg moving from a smaller to larger register)</p></li>
+</ul>
+</li>
+<li><p>Immediates generally are 1,2,4 bytes in size</p></li>
+<li><p>We will see memory syntax next</p></li>
+</ul>
+</section>
+<section id="specifying-memory-locations-is-subtle-effective-address">
+<h4><span class="section-number">9.9.2.2. </span>Specifying memory locations is subtle – Effective Address<a class="headerlink" href="#specifying-memory-locations-is-subtle-effective-address" title="Permalink to this headline">#</a></h4>
+<p>Here is a brief summary.</p>
+<ul class="simple">
+<li><p>Most general form
+$<span class="math notranslate nohighlight">\( EA={Base}_{reg} + ({Index}_{reg} * {Scale}) + {Displacement} \)</span>$
+where</p></li>
+<li><p><span class="math notranslate nohighlight">\(Scale = \{1,2,5,8\}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\({Displacement}\)</span> is 8-bit, 16-bit, or 32-bit value</p></li>
+<li><p><span class="math notranslate nohighlight">\({Base}_{reg}\)</span> and <span class="math notranslate nohighlight">\({Index}_{reg}\)</span> are the value in a 64-bit general-purpose register.</p></li>
+</ul>
+<p>The components can be mixed and matched to make it easier to work with arrays and data structures of various kinds located in memory.</p>
+<p>There are several version of syntax for these combinations</p>
+</section>
+<section id="specifying-and-offset-address-to-be-used-to-locate-the-operand-value">
+<h4><span class="section-number">9.9.2.3. </span>Specifying and offset/address to be used to locate the operand value<a class="headerlink" href="#specifying-and-offset-address-to-be-used-to-locate-the-operand-value" title="Permalink to this headline">#</a></h4>
+<p>They Gory details from the INTEL manuals – At this point this is really just for reference sake.</p>
+<ul>
+<li><p>A lot of the subtly and confusion come from how we work with memory locations</p>
+<ul>
+<li><p>Effective address</p>
+<ol class="simple">
+<li><p>static location:</p></li>
+</ol>
+<ul class="simple">
+<li><p>” Displacement: A displacement alone represents a direct (uncomputed) offset to the operand. Because the displacement is encoded in the instruction, this form of an address is sometimes called an absolute or static address. It is commonly used to access a statically allocated scalar operand.</p></li>
+</ul>
+<ol class="simple">
+<li><p>dynamic location:</p></li>
+</ol>
+<ul class="simple">
+<li><p>“Base: A base alone represents an indirect offset to the operand. Since the value in the base register can change, it can be used for dynamic storage of variables and data structures.”</p></li>
+</ul>
+<ol class="simple">
+<li><p>dynamic + static
+“Base + Displacement: A base register and a displacement can be used together for two distinct purposes:</p>
+<ul class="simple">
+<li><p>As an index into an array when the element size is not 2, 4, or 8 bytes</p>
+<ul>
+<li><p>The displacement component encodes the static offset to the beginning of the array.</p></li>
+<li><p>The base register holds the results of a calculation to determine the offset to a specific element within the array.</p></li>
+</ul>
+</li>
+<li><p>To access a field of a record:</p>
+<ul>
+<li><p>the base register holds the address of the beginning of the record,</p></li>
+<li><p>while the displacement is a static offset to the field.”</p></li>
+<li><p>this form is really useful for stack frame records (rbp base) – more later on this</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“(Index * Scale) + Displacement : This address mode offers an efficient way to index into a static array when the element size is 2, 4, or 8 bytes. The displacement locates the beginning of the array, the index register holds the subscript of the desired array element, and the processor automatically converts the subscript into an index by applying the scaling factor.”</p></li>
+<li><p>“Base + Index + Displacement : Using two registers together supports either</p></li>
+</ol>
+<ul class="simple">
+<li><p>a two-dimensional array (the displacement holds the address of the beginning of the array) or</p></li>
+<li><p>one of several instances of an array of records (the displacement is an offset to a field within the record).”</p></li>
+</ul>
+<ol class="simple">
+<li><p>“Base + (Index * Scale) + Displacement : Using all the addressing components together allows efficient indexing of a two-dimensional array when the elements of the array are 2, 4, or 8 bytes in size.”</p></li>
+<li><p>PC Relative: “RIP + Displacement : In 64-bit mode, RIP-relative addressing uses a signed 32-bit displacement to calculate the effective address of the next instruction by sign-extend the 32-bit value and add to the 64-bit value in RIP.”</p></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<hr></section>
+</section>
+<section id="intel-syntax-examples">
+<h3><span class="section-number">9.9.3. </span>Intel Syntax examples<a class="headerlink" href="#intel-syntax-examples" title="Permalink to this headline">#</a></h3>
+<p>When we specify a memory location we must also clearly state how many bytes we want to work with at that location. Eg. the size in bytes of the value at the memory location.
+To do this, in addition to the address expression, we must also prefix it with the appropriate size syntax as follows:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;BYTE|WORD|DWORD|QWORD&gt;</span> <span class="pre">PTR</span> <span class="pre">[displacement]</span></code> where <code class="docutils literal notranslate"><span class="pre">displacement</span></code> is either a number or symbol</p>
+<ul>
+<li><p>the assembler will often let you skip the <code class="docutils literal notranslate"><span class="pre">&lt;TYPE&gt;</span> <span class="pre">PTR</span></code> if it can figure it out</p>
+<ul>
+<li><p>but I think it is safer to be verbose</p></li>
+</ul>
+</li>
+<li><p>the assembler will let you skip the <code class="docutils literal notranslate"><span class="pre">[]</span></code> if you are using a label</p>
+<ul>
+<li><p>but again I think it is more clear that you mean that value at the label</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OFFSET</span> <span class="pre">[symbol]</span></code> can be used as a source if you want to use the address of the symbol itself as a number</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;BYTE|WORD|DWORD|QWORD&gt;</span> <span class="pre">PTR</span> <span class="pre">[RegBase</span> <span class="pre">+</span> <span class="pre">displacement]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;BYTE|WORD|DWORD|QWORD&gt;</span> <span class="pre">PTR</span> <span class="pre">[RegIdx</span> <span class="pre">*</span> <span class="pre">scale</span> <span class="pre">+</span> <span class="pre">displacement]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;BYTE|WORD|DWORD|QWORD&gt;</span> <span class="pre">PTR</span> <span class="pre">[RegBase</span> <span class="pre">+</span> <span class="pre">RegIdx</span> <span class="pre">*</span> <span class="pre">scale</span> <span class="pre">+</span> <span class="pre">displacement]</span></code></p></li>
+</ul>
+<hr></section>
+</section>
+<section id="move-examples">
+<h2><span class="section-number">9.10. </span>Move examples<a class="headerlink" href="#move-examples" title="Permalink to this headline">#</a></h2>
+<p>So in reality we see that there are many different ways of using <code class="docutils literal notranslate"><span class="pre">mov</span></code> to move data.   The following demonstrates several of the different types.</p>
+<p>Over the next few lectures we will use various different forms of <code class="docutils literal notranslate"><span class="pre">mov</span></code></p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<p><b>CODE: asm - movexamples.s</p>
+<div style="width:107em; height:100%; font-size:inherit; overflow: auto;" >
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span>	# Example code that illustrates various ways of
+	# working with data in memory.
+	# 1) Assemble this code eg. as -g mov.s -o mov.o
+	# 2) Link into an executable eg. ld -g mov.o -o mov
+	#
+	# I suggest you then use gdb to single step the instructions --
+	# executing the instructions one by one. But before you go on
+	# to then next instruction do the following
+	#   1) display the destination register
+	#   2) examine the value in memory you think it will be loaded with
+	#   3) write down on a paper your guess
+	#   4) step the instruction
+	#   5) display the destination register and see if you were right
+	#      if not try and figure out why not
+
+	.intel_syntax noprefix
+
+	# Quick discussion about sections and organizing our memory into
+        # data and text portions
+	
+	# Sections let us seperate out our programs memory into
+	# distinct non-overlaping areas.  The two sections
+	# we will use are .text and .data
+	#
+	# .text is for opcodes     (bytes to be executed)
+	# .data is for data values (bytes to be read and written by our program
+	#
+	# We switch sections with the .section directive
+	# All bytes for a section will be grouped together by the linker and
+	# placed in a single contingous area of memory when a process is created
+	#
+	# Every assembly file can add bytes to either section
+	# You can switch sections at any point in your assembly files
+	
+	# Switch current section to the data section
+	.section .data
+	
+	# set a label MYBYTES to the begin of the following bytes
+MYBYTES:    
+	.quad 0xdeadbeeffeedface   # reserve 8 bytes initialized to
+	                           # the value indicated in hex
+
+	# Switch current section to the text section
+	.section .text
+	
+	.global _start                # expose this symbol to the linker
+_start:
+	# examples of loading registers of different sizes from
+	# data at a label
+	xor r8, r8                    # r8 = 0  (clear r8)
+	mov r8,  QWORD PTR [MYBYTES]  # load  r8 with 8 byte vector at MYBYTES
+	mov r8d, DWORD PTR [MYBYTES]  # load r8d with 4 byte vector at MYBYTES
+	mov r8w, WORD PTR [MYBYTES]   # load r8w with 2 byte vector at MYBYTES
+	mov r8b, BYTE PTR [MYBYTES]   # load r8b with 1 byte vector at MYBYTES
+
+	# example of loading registers of differrent sizes using another register
+	# that we first load with the address of the data
+	xor rax, rax		      # rax = 0 (clear rax) 
+	mov rax, OFFSET MYBYTES       # rax = &amp;MYBYTES (set rax to the address)
+
+	mov rbx, QWORD PTR [rax]
+	mov ecx, DWORD PTR [rax]
+	mov dx,  WORD  PTR [rax]
+	mov sil, BYTE  PTR [rax]
+
+	# example of using another register to act as a index
+	# Effective Address = rax + r9 * 1
+	# where the current value in rax is added to the value in r9 times 1
+	# 1 is called the scale when one we can skip it but show it to be
+	# explicit. Other valid values for scale are 2, 4, and 8
+	xor r9,r9
+	mov r10b, BYTE PTR [rax + r9*1]    
+	inc r9
+	mov r11b, BYTE PTR [rax + r9*1]    
+	inc r9
+	mov r12b, BYTE PTR [rax + r9*1]	
+	inc r9
+	mov r13b, BYTE PTR [rax + r9*1]
+
+	# same as above but using a label
+	xor r9,r9
+	mov r10b, BYTE PTR [MYBYTES + r9*1]    
+	inc r9
+	mov r11b, BYTE PTR [MYBYTES + r9*1]    
+	inc r9
+	mov r12b, BYTE PTR [MYBYTES + r9*1]	
+	inc r9
+	mov r13b, BYTE PTR [MYBYTES + r9*1]
+	
+	# example of using scale = 2
+	xor r9, r9
+	mov r14w, WORD PTR [rax + r9 * 2]  
+	inc r9
+	mov r15w, WORD PTR [rax + r9 * 2]
+
+	# example of using a base reg, index, and displacement
+	xor r9, r9
+	mov r14w, WORD PTR [rax + r9 * 2 + 1]
+	inc r9
+	mov r15w, WORD PTR [rax + r9 * 2 + 1]
+	
+	# following calls the UNIX OS exit system call
+	# so that we terminate nicely
+	
+	.equ EXIT_SYSCALL_NR,60
+	mov rax, EXIT_SYSCALL_NR
+	mov rdi, 0
+	syscall
+	
+	
+
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="test-your-knowledge">
+<h2><span class="section-number">9.11. </span>Test your knowledge<a class="headerlink" href="#test-your-knowledge" title="Permalink to this headline">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">.data</span></code> directive in our assembly source code to switch sections.  Then we can add bytes to the data section of our process’s memory.  Labels in the data section work exactly the same as in the text section.  Labels let us refer to the bytes following the label.  Eg. <code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">.quad</span> <span class="pre">142</span></code> means reserve 8 bytes and initialize those 8 bytes with the decimal value 142.  Finally, the symbol <code class="docutils literal notranslate"><span class="pre">x</span></code> will be assigned the address where these bytes end up.</p>
+</div>
+<p>With the above knowledge can you figure out what this code is doing and explain how it works?</p>
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span><span class="w">        </span><span class="na">.intel_syntax</span><span class="w"> </span><span class="no">noprefix</span><span class="w"></span>
+<span class="w">        </span><span class="na">.data</span><span class="w"></span>
+<span class="nl">x:</span><span class="w">      </span><span class="na">.quad</span><span class="w"> </span><span class="mi">142</span><span class="w"></span>
+<span class="nl">y:</span><span class="w">      </span><span class="na">.quad</span><span class="w"> </span><span class="mi">4200</span><span class="w"></span>
+<span class="nl">sum:</span><span class="w">    </span><span class="na">.quad</span><span class="w"></span>
+
+<span class="w">        </span><span class="na">.text</span><span class="w"></span>
+<span class="w">        </span><span class="na">.global</span><span class="w"> </span><span class="no">_start</span><span class="w"></span>
+<span class="nl">_start:</span><span class="w"></span>
+<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">QWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">x</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="nf">add</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">QWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">y</span><span class="p">]</span><span class="w"></span>
+<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">QWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">sum</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w"></span>
+<span class="w">        </span>
+<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="w"></span>
+<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="w">        </span><span class="nf">syscall</span><span class="w"></span>
+</pre></div>
+</div>
+<p>To figure this out you will want to assemble, link and explore the resulting binary in <code class="docutils literal notranslate"><span class="pre">gdb</span></code>.  In <code class="docutils literal notranslate"><span class="pre">gdb</span></code> to examine the bytes at a label in the data area you will need to add an <code class="docutils literal notranslate"><span class="pre">&amp;</span></code> in front of the symbol.  Eg To examine the bytes at x you could use the following gdb commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x/8xb</span> <span class="pre">&amp;</span> <span class="pre">x</span></code> print 8 bytes starting at the address of x in hexadecimal format</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1gd</span> <span class="pre">&amp;</span> <span class="pre">x</span></code> print the 8 bytes at the address of x as a single 8 byte integer</p></li>
+</ul>
+<p>Finally, can you extend the code to calculate the number of 1’s in the sum and save the result somewhere in the data section?</p>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"00fea7321bcf4139b503633979b9fa62": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "06d4c6d7cb7d4019becff0271003967a": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_b784f0faa7804c1599474a10eacfbb60", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nrm -f mov mov.o\r\nas -g  mov.S -o mov.o\r\nld -g  mov.o -o mov\r\n"}]}}, "0768b94a3af74c50aaead6655e54492c": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "0d233cb82d9b44f493217cb1cab3328b": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_6681c6b99b9549cd9b2306713a274d51", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nas   mov.S -o mov.o\r\n"}]}}, "13983652ace345dda00753f10749b099": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4c77192cf4084cafa81919393d6c3525": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_7eb592164f9949499bb3b1bda8e56d14", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ ls -l mov\n-rwxr-xr-x. 1 jovyan root 4712 Sep  1 16:01 \u001b[0m\u001b[01;32mmov\u001b[0m\r\n"}]}}, "624991d670c24deca5536412703c282f": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6551d9dab2a74d3aba60922280ba63a6": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_624991d670c24deca5536412703c282f", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ file mov.o\nmov.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped\r\n"}]}}, "65655396cd6e4d44ae537f732c11c569": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "6681c6b99b9549cd9b2306713a274d51": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "72e097e30bb24cad8b56f3b0312c09fb": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7422950848104d909e3d6c4d2d963471": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_13983652ace345dda00753f10749b099", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ objdump -t mov.o\n\r\nmov.o:     file format elf64-x86-64\r\n\r\nSYMBOL TABLE:\r\n0000000000000000 l    d  .text\t0000000000000000 .text\r\n0000000000000000 l    d  .data\t0000000000000000 .data\r\n0000000000000000 l    d  .bss\t0000000000000000 .bss\r\n000000000000003c l       *ABS*\t0000000000000000 EXIT_SYSCALL_NR\r\n0000000000000000 g       .text\t0000000000000000 _start\r\n\r\n\r\n"}]}}, "7ab8535292db431f9d66b1ce813fee2e": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_0768b94a3af74c50aaead6655e54492c", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "\nld   mov.o -o mov\r\n"}]}}, "7eb592164f9949499bb3b1bda8e56d14": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8d97728c41e548808d873053d68bcbe3": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_72e097e30bb24cad8b56f3b0312c09fb", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ file mov\nmov: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, not stripped\r\n"}]}}, "94282ed5bab14cdabb1e2b1558ff8430": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_00fea7321bcf4139b503633979b9fa62", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ objdump -t mov\n\r\nmov:     file format elf64-x86-64\r\n\r\nSYMBOL TABLE:\r\n0000000000401000 l    d  .text\t0000000000000000 .text\r\n0000000000000000 l    df *ABS*\t0000000000000000 mov.o\r\n000000000000003c l       *ABS*\t0000000000000000 EXIT_SYSCALL_NR\r\n0000000000401000 g       .text\t0000000000000000 _start\r\n0000000000402000 g       .text\t0000000000000000 __bss_start\r\n0000000000402000 g       .text\t0000000000000000 _edata\r\n0000000000402000 g       .text\t0000000000000000 _end\r\n\r\n\r\n"}]}}, "b784f0faa7804c1599474a10eacfbb60": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d121659902b3422bb0c6a20d43c51526": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_65655396cd6e4d44ae537f732c11c569", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ ls -l mov.o\n-rw-r--r--. 1 jovyan root 752 Sep  1 16:01 mov.o\r\n"}]}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./assembly"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="L08.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">8. </span>SLS Lecture 8 :  Writing some simple assembly programs</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="L10.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">10. </span>SLS Lecture 10 : Assembly : Program Anatomy I</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
