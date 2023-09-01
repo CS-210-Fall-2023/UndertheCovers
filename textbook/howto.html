@@ -1,0 +1,912 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>How to read this book &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Operating Systems and UNIX" href="unix/intro.html" />
+    <link rel="prev" title="Under the Covers : The Secret Life of Software" href="intro_tb.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro_tb.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  How to read this book
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/intro.html">
+   1. Operating Systems and UNIX
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/terminal.html">
+   2. What is a Terminal and why do we still use them?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/files.html">
+   3. Organizing and Managing Information as a Tree of Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/shellintro.html">
+   4. The Shell - Part I: Having an ASCII conversation with the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/shelldetails.html">
+   5. The Shell - Part II: Some UNIX details
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/editors.html">
+   6. Editors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/processes.html">
+   7. Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/ides.html">
+   8. IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/make.html">
+   9. Make
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/gitintro.html">
+   10. Intro to Git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="unix/git.html">
+   11. Git
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/intro.html">
+   12. Introduction: Assembly Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/vonNeumannArchitecture.html">
+   13. The von Neumann Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/UnixAssemblyProgramming.html">
+   14. Executables and Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/Debuggers.html">
+   15. Machine Debuggers &amp; Open Process Surgery
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/assembly.html">
+   16. Lets write some assembly code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/InfoRepI.html">
+   17. Representing information - Preliminaries: Bits, Bytes and Notation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/nativetypes.html">
+   18. Information Representation - Native Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/anatomyI.html">
+   19. Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/anatomyII.html">
+   20. Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/anatomyIII.html">
+   21. Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/anatomyIV.html">
+   22. Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="assembly/assemblyOS.html">
+   23. Assembly using the OS
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="C/intro.html">
+   24. Introduction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specific Material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="BUCS210_intro.html">
+   BU CS210 Overview
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers/issues/new?title=Issue%20on%20page%20%2Fhowto.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers/edit/main/underthecovers/howto.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="_sources/howto.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#browser-compatibility">
+   Browser compatibility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#opening-an-issue">
+   Opening an issue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#warning-danger">
+   WARNING – DANGER
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-0-start-your-server">
+   Step 0: Start your server
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bu-server-startup">
+     BU Server startup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#booting-your-server">
+     Booting your server
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unix-terminal-environment">
+   UNIX Terminal Environment
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-terminals">
+     Creating Terminals
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#closing-terminals">
+     Closing Terminals
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unix-terminal-environment-lifetime">
+   UNIX Terminal Environment “Lifetime”
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#warning">
+     WARNING
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shutting-down-your-server">
+   Shutting Down Your Server
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hub-control-panel">
+     Hub Control Panel
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shutdown">
+     Shutdown
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>How to read this book</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#browser-compatibility">
+   Browser compatibility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#opening-an-issue">
+   Opening an issue
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#warning-danger">
+   WARNING – DANGER
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-0-start-your-server">
+   Step 0: Start your server
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bu-server-startup">
+     BU Server startup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#booting-your-server">
+     Booting your server
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unix-terminal-environment">
+   UNIX Terminal Environment
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#creating-terminals">
+     Creating Terminals
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#closing-terminals">
+     Closing Terminals
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#unix-terminal-environment-lifetime">
+   UNIX Terminal Environment “Lifetime”
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#warning">
+     WARNING
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shutting-down-your-server">
+   Shutting Down Your Server
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hub-control-panel">
+     Hub Control Panel
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#shutdown">
+     Shutdown
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="how-to-read-this-book">
+<h1>How to read this book<a class="headerlink" href="#how-to-read-this-book" title="Permalink to this headline">#</a></h1>
+<p>This book has been designed so that you can actively engage with the material.  We have constructed an online environment that you can login to from your browser.
+Once you have logged in you can then start a “server” that you can then access in your browser.  This server is identical to the server that was used to author
+the content of the book and has all the software required for the examples and more.</p>
+<p>In general we recommend that you read the book at a computer with a mouse and keyboard so that you can follow along with the examples.  Below we will walk you
+though a typical session of work with the book.</p>
+<section id="browser-compatibility">
+<h2>Browser compatibility<a class="headerlink" href="#browser-compatibility" title="Permalink to this headline">#</a></h2>
+<p>The author recommends using the <a class="reference external" href="https://www.google.com/chrome/">Google Chrome</a> browser but most of the content should work with most browsers.  If you run into issues please open an issue and  the try switching browsers to see if this solves your problem.</p>
+</section>
+<section id="opening-an-issue">
+<h2>Opening an issue<a class="headerlink" href="#opening-an-issue" title="Permalink to this headline">#</a></h2>
+<p>Towards the top at the top right hand side of the page you will see a few icons.
+Putting your mouse over the git icon will reveal a dropdown.  Select “open issue”
+and follow the instructions. Be sure to state what browser you were using and
+what the problem was.  If possible include a screenshot.</p>
+<p>Thanks!</p>
+</section>
+<section id="warning-danger">
+<h2>WARNING – DANGER<a class="headerlink" href="#warning-danger" title="Permalink to this headline">#</a></h2>
+<blockquote>
+<div><p style="background-color:tomato;">  <b>The files you create within your Linux server are NOT PERMANENT!</b>  In other words you cannot rely on the files to be there if the server crashes for some reason, it gets shutdown due to inactivity, or you purposefully shut it down.   You must frequently save your work to an external service like <a href="https://github.com/">https://github.com/</a> or  <a href="https://gitlab.com/">https://gitlab.com/</a>.
+</div></blockquote>
+</p>
+</section>
+<section id="step-0-start-your-server">
+<h2>Step 0: Start your server<a class="headerlink" href="#step-0-start-your-server" title="Permalink to this headline">#</a></h2>
+<p>If you are in a BU class that is using this book, follow this link:</p>
+<ul class="simple">
+<li><p><a target="_blank" rel="noopener noreferrerhttps" href="https://rhods-dashboard-redhat-ods-applications.apps.prod2023.zkf1.p1.openshiftapps.com/notebookController/spawner">https://rhods-dashboard-redhat-ods-applications.apps.prod2023.zkf1.p1.openshiftapps.
+com/notebookController/spawner</a></p></li>
+</ul>
+<section id="bu-server-startup">
+<h3>BU Server startup<a class="headerlink" href="#bu-server-startup" title="Permalink to this headline">#</a></h3>
+<p>Clicking on the above link should take you to the following page:</p>
+<center>
+<img src="images/howto/howto0.png" >
+</center>
+Clicking "Login with OpenShift".  This will take you to the page displayed below.
+<center>
+<img src="images/howto/howto0.1.png">
+</center>
+Click "GoogleBU".  This will take you to the following login page.  
+<center>
+<img src="images/howto/howto0.2.png" >
+</center>
+Enter your BU username and password and then click "Continue".  This may then redirect you to BU's two factor authentication service as shown below
+<center>
+<img src="images/howto/howto0.3.png" >
+</center>
+Select your choice of authentication mechanism.  If you are not able to login try again using an <a href="https://support.google.com/chrome/answer/95464?hl=en&co=GENIE.Platform%3DDesktop">"incognito" browser window"</a>.  If you still cannot login and you are sure you are in a class that is using the book please contact the teaching staff and they will add your BU user to the service.
+</section>
+<section id="booting-your-server">
+<h3>Booting your server<a class="headerlink" href="#booting-your-server" title="Permalink to this headline">#</a></h3>
+<p>After login you should be presented with the following panel.  You will need to:</p>
+<ol class="simple">
+<li><p>Select the right “Notebook Image” (“UCSLS UNIX Environment” or “Under the Covers: The Secret Life of Software”),</p></li>
+<li><p>Select “Start server in current tab”, and then</p></li>
+<li><p>click on the “Start Server” button.</p></li>
+</ol>
+<center>
+<img src="images/howto/howto1.png" >
+</center>
+<p>You then should observe the following sequence progress as your server starts up</p>
+<!-- produced by: 
+htmlFig("[[{'src': 'images/howto/howto2.png', 'cellwidth': '33.33%'}, {'src': 'images/howto/howto3.png', 'cellwidth': '33%'}, {'src': 'images/howto/howto4.png', 'cellwidth': '33%'}]]", 
+        id="", 
+        align="center", 
+        width="100%",
+        margin="auto auto auto auto",
+        caption="", 
+        captionalign="left")
+-->
+<table align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: auto auto auto auto">
+    <tr style="padding: 0; margin: 0;"> 
+        <td colspan="1" width="33.33%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
+            <div style="padding: 0; margin: 0 0 0 0;">
+              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
+                   <img src="images/howto/howto2.png" width="100%" style="padding: 0; margin: 0;">
+                </figure>
+            </div>
+        </td>
+        <td colspan="1" width="33%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
+            <div style="padding: 0; margin: 0 0 0 0;">
+              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
+                   <img src="images/howto/howto3.png" width="100%" style="padding: 0; margin: 0;">
+                </figure>
+            </div>
+        </td>
+        <td colspan="1" width="33%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
+            <div style="padding: 0; margin: 0 0 0 0;">
+              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
+                   <img src="images/howto/howto4.png" width="100%" style="padding: 0; margin: 0;">
+                </figure>
+            </div>
+        </td>
+    </tr>
+</table>
+<p>At this point you may be presented again with the following login page on which you should again select “GoogleBU”.</p>
+<center>
+<img src="images/howto/howto4.1.png" >
+</center></section>
+</section>
+<section id="unix-terminal-environment">
+<h2>UNIX Terminal Environment<a class="headerlink" href="#unix-terminal-environment" title="Permalink to this headline">#</a></h2>
+<p>After the boot process you should be presented with the UNIX terminal environment that we will be using as illustrated below.</p>
+<center>
+<img src="images/howto/howto5.png" >
+</center>>
+<section id="creating-terminals">
+<h3>Creating Terminals<a class="headerlink" href="#creating-terminals" title="Permalink to this headline">#</a></h3>
+<center>
+<img src="images/howto/howto6.png" >
+</center>
+<p>Use the “File” menu to select “New” then “Terminal”.  This should start a Terminal as shown below:</p>
+<center>
+<img src="images/howto/howto7.png" >
+</center>
+<p>Using the “File-&gt;New-&gt;Terminal” menu option again lets you create more terminals.  Each terminal will have its own tab as shown below.</p>
+<center>
+<img src="images/howto/howto7.1.png" >
+</center>
+<p>You can create and organize as many terminals as you like.  Dragging the “Terminal” tab title bar around will allow you to adjust the layout.  For example, below we have started three terminals and organized them in two rows – two on the first row and one on the second.</p>
+<center>
+<img src="images/howto/howto8.png" >
+</center>
+</section>
+<section id="closing-terminals">
+<h3>Closing Terminals<a class="headerlink" href="#closing-terminals" title="Permalink to this headline">#</a></h3>
+<p>To close a terminal simply click the “x” in the terminal’s tab title bar.</p>
+</section>
+</section>
+<section id="unix-terminal-environment-lifetime">
+<h2>UNIX Terminal Environment “Lifetime”<a class="headerlink" href="#unix-terminal-environment-lifetime" title="Permalink to this headline">#</a></h2>
+<p>Your UNIX terminal environment is temporary.  It will automatically be destroyed.  This will happen:</p>
+<ol class="simple">
+<li><p>After a period of inactivity</p></li>
+<li><p>12 hours after you started it</p></li>
+</ol>
+<p>Rather than letting the system destroy your environment arbitrarily it is best for you to shut it down yourself when you are done your work, see below.</p>
+<section id="warning">
+<h3>WARNING<a class="headerlink" href="#warning" title="Permalink to this headline">#</a></h3>
+<p>Given the temporary nature of the environment you should be aware that <strong>ANY FILES YOU HAVE WITHIN IT WILL BE DESTROYED</strong> when it shuts down.  When you start a new one it will reset to a fresh clean state.</p>
+<p>To save your work you must push it to an external git service such as <a class="reference external" href="http://github.com">github.com</a> or <a class="reference external" href="http://gitlab.com">gitlab.com</a> (for those of you taking CS210 see the course related howto on Piazza).</p>
+</section>
+</section>
+<section id="shutting-down-your-server">
+<h2>Shutting Down Your Server<a class="headerlink" href="#shutting-down-your-server" title="Permalink to this headline">#</a></h2>
+<p><strong>When you have finished your session of working it is important that you shutdown your server.</strong>  To shutdown the server select the “Hub Control” feature from the “File” menu as illustrated below</p>
+<center>
+<img src="images/howto/howto10.png" >
+</center>
+<section id="hub-control-panel">
+<h3>Hub Control Panel<a class="headerlink" href="#hub-control-panel" title="Permalink to this headline">#</a></h3>
+<p>This will open a new tab or window with following page:</p>
+<center>
+<img src="images/howto/howto11.png" >
+</center>
+<p>This may present you with a confirmation panel.  Click “Stop server” to confirm.</p>
+<center>
+<img src="images/howto/howto11.1.png" >
+</center>
+</section>
+<section id="shutdown">
+<h3>Shutdown<a class="headerlink" href="#shutdown" title="Permalink to this headline">#</a></h3>
+<p>At this point the browser tab or window that you used for your work session will no longer be valid, see below, and you can safely close it.</p>
+<center>
+<img src="images/howto/howto13.png" >
+</center></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="intro_tb.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Under the Covers : The Secret Life of Software</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="unix/intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Operating Systems and UNIX</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

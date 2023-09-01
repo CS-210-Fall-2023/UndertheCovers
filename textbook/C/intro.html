@@ -1,0 +1,988 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>24. Introduction &#8212; UndertheCovers</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="BU CS210 Overview" href="../BUCS210_intro.html" />
+    <link rel="prev" title="23. Assembly using the OS" href="../assembly/assemblyOS.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/logo.jpg" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">UndertheCovers</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_tb.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  How to read this book
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../howto.html">
+   How to read this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Unix Development Environment
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/intro.html">
+   1. Operating Systems and UNIX
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/terminal.html">
+   2. What is a Terminal and why do we still use them?
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/files.html">
+   3. Organizing and Managing Information as a Tree of Files and Directories
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/shellintro.html">
+   4. The Shell - Part I: Having an ASCII conversation with the OS
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/shelldetails.html">
+   5. The Shell - Part II: Some UNIX details
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/editors.html">
+   6. Editors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/processes.html">
+   7. Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/ides.html">
+   8. IDEs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/make.html">
+   9. Make
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/gitintro.html">
+   10. Intro to Git
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../unix/git.html">
+   11. Git
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  The Belly of the Beast: The von Neumann Architecture and Assembly Programming
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/intro.html">
+   12. Introduction: Assembly Programming
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/vonNeumannArchitecture.html">
+   13. The von Neumann Architecture
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/UnixAssemblyProgramming.html">
+   14. Executables and Processes
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/Debuggers.html">
+   15. Machine Debuggers &amp; Open Process Surgery
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/assembly.html">
+   16. Lets write some assembly code
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/InfoRepI.html">
+   17. Representing information - Preliminaries: Bits, Bytes and Notation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/nativetypes.html">
+   18. Information Representation - Native Types
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/anatomyI.html">
+   19. Assembly : Program Anatomy I
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/anatomyII.html">
+   20. Program Anatomy II : Functions
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/anatomyIII.html">
+   21. Program Anatomy III : Code as Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/anatomyIV.html">
+   22. Program Anatomy IV: The Tree of Bytes and Data Structures
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../assembly/assemblyOS.html">
+   23. Assembly using the OS
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Into the Light : C Programming
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   24. Introduction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course Specific Material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../BUCS210_intro.html">
+   BU CS210 Overview
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers/issues/new?title=Issue%20on%20page%20%2FC/intro.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/jappavoo/UndertheCovers/edit/main/underthecovers/C/intro.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/C/intro.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-human-burden-of-assembly-programming-and-programmer-lock-in">
+   24.1. Downside: The human burden of assembly programming and programmer lock in.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-code-we-write-is-locked-to-a-specific-cpu">
+   24.2. Downside: The code we write is locked to a specific CPU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-code-we-write-is-locked-to-a-specific-os">
+   24.3. Downside: The code we write is locked to a specific OS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#high-level-langauges">
+   24.4. High level Langauges
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#but">
+     24.4.1. But …
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-birth-of-c">
+   24.5. The birth of “C”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-as-an-alternative-to-assembly-programming">
+   24.6. C as an alternative to Assembly programming
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-a-life-beyond-unix-os-development">
+   24.7. “C” a life beyond UNIX OS development.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#our-approach-to-c">
+   24.8. Our approach to “C”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preliminaries-the-c-compiler-our-very-onw-personal-assembly-programmer">
+   24.9. Preliminaries:  The C Compiler : Our very onw personal assembly programmer
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-toolchain">
+     24.9.1. The ToolChain
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cc1-as-ld">
+   24.10. cc1, as, ld
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compiler-driver-gcc-cc">
+     24.10.1. Compiler driver: gcc/cc
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#controlling-directing-the-compiler">
+   24.11. Controlling / Directing the compiler
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#options">
+     24.11.1. Options
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-options">
+       24.11.1.1. Optimization options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#language-options">
+       24.11.1.2. Language options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#debugger-options">
+       24.11.1.3. Debugger options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#machine-specific-options">
+       24.11.1.4. Machine Specific options
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-focus">
+     24.11.2. Our focus
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Introduction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-human-burden-of-assembly-programming-and-programmer-lock-in">
+   24.1. Downside: The human burden of assembly programming and programmer lock in.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-code-we-write-is-locked-to-a-specific-cpu">
+   24.2. Downside: The code we write is locked to a specific CPU
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#downside-the-code-we-write-is-locked-to-a-specific-os">
+   24.3. Downside: The code we write is locked to a specific OS
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#high-level-langauges">
+   24.4. High level Langauges
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#but">
+     24.4.1. But …
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-birth-of-c">
+   24.5. The birth of “C”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-as-an-alternative-to-assembly-programming">
+   24.6. C as an alternative to Assembly programming
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#c-a-life-beyond-unix-os-development">
+   24.7. “C” a life beyond UNIX OS development.
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#our-approach-to-c">
+   24.8. Our approach to “C”
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#preliminaries-the-c-compiler-our-very-onw-personal-assembly-programmer">
+   24.9. Preliminaries:  The C Compiler : Our very onw personal assembly programmer
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-toolchain">
+     24.9.1. The ToolChain
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cc1-as-ld">
+   24.10. cc1, as, ld
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compiler-driver-gcc-cc">
+     24.10.1. Compiler driver: gcc/cc
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#controlling-directing-the-compiler">
+   24.11. Controlling / Directing the compiler
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#options">
+     24.11.1. Options
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#optimization-options">
+       24.11.1.1. Optimization options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#language-options">
+       24.11.1.2. Language options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#debugger-options">
+       24.11.1.3. Debugger options
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#machine-specific-options">
+       24.11.1.4. Machine Specific options
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#our-focus">
+     24.11.2. Our focus
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">run</span> -i ../python/common.py
+<span class="c1">#%run -i ../python/ln_preamble.py</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction">
+<h1><span class="section-number">24. </span>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h1>
+<p>So now that we have a sense for how programs work and we know how to write assembly code, that is very close to the native language of the computer, let us try and figure out how to ensure that most humans never have to do that!</p>
+<p>Understanding how the relationship between the cpu and the values in memory give us the ability to construct computer programs is very powerful.  However, there are many disadvantages to trying to write and develop all our software with tools that only provide a raw binary view of programming.  In particular, the assembler and linker are very powerful but they require us to write a lot of carefully constructed code and to know a lot about the specific cpu and operating system that we what our program to run on.</p>
+<section id="downside-the-human-burden-of-assembly-programming-and-programmer-lock-in">
+<h2><span class="section-number">24.1. </span>Downside: The human burden of assembly programming and programmer lock in.<a class="headerlink" href="#downside-the-human-burden-of-assembly-programming-and-programmer-lock-in" title="Permalink to this headline">#</a></h2>
+<p>Consider how when writing assembly code we can demark any area of memory with a symbolic label and place any byte values we want in that area memory.  While this give us a great deal of freedom and power it also means that we have to make lots of decisions and write lots of carefully constructed assembly just to write a function or layout a data stucture.   For example we are responsible for knowing that one label represents the start of a function while another represents an else condition of an if construct.  Or that another label demarks a single byte that we want to use as a byte sized unsigned integer followed by an area of memory that we want to use as an eight byte signed integer.   Think of all the trouble we might create if we accidentally get confused and use our areas of memory inconsistently in different parts of our program.  For example we accidentally treat the label of the else clause as function by calling it or we directly jump to the function label instead of calling it.  Or perhaps we move a four byte value to the area that we intended to use as a single byte unsigned integer followed an eight byte signed value.  This would likely “corrupt” both the single byte value and the 8 byte value all in one fell swoop.  We could spend days and days trying to figure out why our program seems to do strange things once in a while.  Or worse we never realize it and our code simply one day causes an airplane to crash.</p>
+<p>If focsed all ones effort in learning all the nuances of the assembly language of a particular CPU then you have locked yourself into what CPU’s and OS’s you can be productive in.</p>
+</section>
+<section id="downside-the-code-we-write-is-locked-to-a-specific-cpu">
+<h2><span class="section-number">24.2. </span>Downside: The code we write is locked to a specific CPU<a class="headerlink" href="#downside-the-code-we-write-is-locked-to-a-specific-cpu" title="Permalink to this headline">#</a></h2>
+<p>Futher when we write assembly code we end up with a program that can only work on a computer that has a cpu that is compatible with the instruction set we wrote our code in.  For example we might write a program to sort numbers in 6502 assembly language.  Unsurprisingly the executable we create cannot be executed on a computer with an Intel X86 processor or one with an ARM AArch64 processor.  But worse the source code, the ascii ‘.S’ files,  of our program cannot be assembled using and X86 or ARM assembler to produce a binary for systems using those processors.  After all the code we wrote specifically identifies 6502 instructions which translate direclty into binary opcodes for the 6502.  The other processor likely don’t have these particular instructions and even if they did they need not translate to the apprropriate opcodes.  However, it is obvious that
+not only should it be possible to write a program to sort numbers on all of these computers
+the general structure of our program should be the same.  After all, all of these computers are von Neumann computers where they implement a basic processing loop and their instructions and data are represented by bytes in memory.  It would be really nice if we could write our code in a common assembly language and the assemblers for each processor could convert.  Of course this unfortunately might also mean that we could not use instructions that don’t easly have a counter part on each processor.  For example it is easy to see that all of the systems will have instructions for moving values to and from memory to either specific registers and have instructions for conducting addition.  However it is unlikely that they all would have an equivalent of the X86 <code class="docutils literal notranslate"><span class="pre">popcnt</span></code> instruction that calculates the number of one bits in a 64 bit vector and stores the result to a memory location.   So we would need to restrict our genric assembly language to avoid the use of such instructions and of course loose the power of their use.</p>
+</section>
+<section id="downside-the-code-we-write-is-locked-to-a-specific-os">
+<h2><span class="section-number">24.3. </span>Downside: The code we write is locked to a specific OS<a class="headerlink" href="#downside-the-code-we-write-is-locked-to-a-specific-os" title="Permalink to this headline">#</a></h2>
+<p>Lastly consider what we had to do in an assembly program to use facilities of the operating system.  We had to explictly know what functions the specific operating system has, what they do, what argument they require, what registers to use to pass the arguments, what they calls return, the cpu specific instructions for call the operating system functions.  Knowing all this we then had to write the CPU specific assembly.  As such our program became speific to both the CPU and OS.  However, again it seems reasonable that most Operating systems will support ways for connecting to a webserver on the internet and sending and receiving bytes from it.  It would be really nice to write code that can run or at least be translated by a tool to run on the particular OS we are using.</p>
+</section>
+<section id="high-level-langauges">
+<h2><span class="section-number">24.4. </span>High level Langauges<a class="headerlink" href="#high-level-langauges" title="Permalink to this headline">#</a></h2>
+<p>Now many of us likely have written programs in languages like Python, Java, etc. and have never had any of the issues assocaited with writing assembly code.    So how is this possible if in the end the hardware only can execute instructions and interpret data that are represented as bytes in memory?</p>
+<p>These languages do not run natively.  Rather the languages are implememented by software that “translate” or interpret programs written in the language they support.  For example in order to run a Python program you must run an Python executable, A Python Interpreter, that then process your python program.  There is nothing particularly special about the Python Interpreter executable.  It is a binary has been built to execute on your OS and cpu. Just like the executables we built in the prior portion of this book.</p>
+<p>As a matter of fact, using our knowledge of UNIX and assembly we can validate this fact for ourselves.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "4f8302dd22bf4b07a1452780b164e3eb", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>If we want we can even run it in the debugger</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TermShellCmd</span><span class="p">(</span><span class="s2">&quot;echo -e &#39;set disassembly-flavor intel</span><span class="se">\n</span><span class="s2">b _start</span><span class="se">\n</span><span class="s2">run</span><span class="se">\n</span><span class="s2">disass</span><span class="se">\n</span><span class="s2">quit&#39; | gdb $(type -p python)&quot;</span><span class="p">,</span> <span class="n">noposttext</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">markdown</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ca8c3a587df44b85bf92cce9df430334", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>From here, like the programs we wrote, we could single step it and examine how it uses the CPU, memory and the calls it makes to the OS.</p>
+<p>The Python interpreter is a native program that reads in python programs as ASCII lines of text and then interprets them according to the Python language definition.</p>
+<section id="but">
+<h3><span class="section-number">24.4.1. </span>But …<a class="headerlink" href="#but" title="Permalink to this headline">#</a></h3>
+<p>Take a look again at how big the python binary is</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TermShellCmd</span><span class="p">(</span><span class="s2">&quot;ls -lh $(type -p python3.9)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "78c6e0bdf2134dac98d11caeca186cf5", "version_major": 2, "version_minor": 0}
+</script></div>
+</div>
+<p>That’s a lot bigger than the programs we wrote in assembly code! Could you imagine writing something that big? Futher could you imagine writing a new version for every computer type and OS pair?  As a matter of fact, it is likely if we did have to do that then we would not even have languages like Python in the first place!</p>
+</section>
+</section>
+<section id="the-birth-of-c">
+<h2><span class="section-number">24.5. </span>The birth of “C”<a class="headerlink" href="#the-birth-of-c" title="Permalink to this headline">#</a></h2>
+<p>Well as a matter of fact this is precisely the kind of problem that the early inventors of the UNIX operating system were facing. The UNIX kernel is also a very complex program that one would like to have operate on many different types of computers.  For the most part operating system kernels had been largely written in Assembly language for the particular computer the OS was going to run on.  Further to support a new computer the OS had to be carefully rewritten for the new computer’s CPU features, memory organization and devices.  Borrowing from the idea of using high-level languages to implement applications the developers of UNIX choose to evolve the UNIX kernel in a way that would allow much of the system to be portable.  That is to say the work to be done to get the system running on a new computer would not require writing new assembly code for all but a small part of the code.   However, the nature of operating systems code is that it needs to often  manipulate the CPU and memory directly and easily inter-operates with assembly code.  This is in contrast to the high-level languages that were being developed for applications. Those languages largely went out of their way to hide as much of the machine details as possible from the programmer and restrict what could be done in the language. Doing so avoids the need to understand the details of how data and code is represented as binary values in memory and to keep programmers from making various kinds of errors.</p>
+<p>What was needed was a programming language that was in-between assembly language and the high-level languages.  Where the new language would not hide the nature of memory from the programmer nor excessively restrict what can be done while still helping to avoid common pitfalls of assembly programming.  Rather the language should precisely let the programmer work with memory but in a way that is more generic and portable than writing code for a particular CPU assembly language.</p>
+<p>So the approach taken with the UNIX operating system was to develop a program, that we call a compiler, that could translate source code in this generic machine oriented language to assembly code for the particular computer that was being targeted.   The assembly code the compiler produced can then be treated as input in the the systems assembler and linker.   If much of the OS could be written in this generic language then getting the OS to run on a new computer really meant writing a new compiler for the system and then “re-compile” the OS source with it.  In addition to portability the language would help a programmer  avoid common errors and the need to know the details of every CPU.  I</p>
+<p>“C” is the language that was developed by the authors of the UNIX operating system and the program that translates it into assembly is a “C compiler”.</p>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/history.svg"><img alt="../_images/history.svg" class="align-left" src="../_images/history.svg" width="60" /></a> <p style="background-color:powderblue;">  In the above we have liberally shortened and potentially distorted history for the sake of comprehensibility. For a more complete and historically accurate discussion of how the “C” programming language came into being see <a class="reference external" href="https://www.bell-labs.com/usr/dmr/www/chist.html">The Development of the C Language*</a>.</p></p>
+</div></blockquote>
+</section>
+<section id="c-as-an-alternative-to-assembly-programming">
+<h2><span class="section-number">24.6. </span>C as an alternative to Assembly programming<a class="headerlink" href="#c-as-an-alternative-to-assembly-programming" title="Permalink to this headline">#</a></h2>
+<p>So how do we maintain the power of assembly programming while also avoiding the downsides?</p>
+<p>Almost by definition we must make some trade-offs</p>
+</section>
+<section id="c-a-life-beyond-unix-os-development">
+<h2><span class="section-number">24.7. </span>“C” a life beyond UNIX OS development.<a class="headerlink" href="#c-a-life-beyond-unix-os-development" title="Permalink to this headline">#</a></h2>
+<p>This language proved to be so useful its ability to enable expert programmers to write new tools that many of the programs that traditionaly had to be written in assembly language like the high-level application language translators and interpreters were rewritten to C.</p>
+</section>
+<section id="our-approach-to-c">
+<h2><span class="section-number">24.8. </span>Our approach to “C”<a class="headerlink" href="#our-approach-to-c" title="Permalink to this headline">#</a></h2>
+<p>We will take an unconventional approach to exploring and learning the “C” programming lanaguge.  Rather than just considering it as a programming language and its attendant syntax we will develop our understanding as we explore how it b</p>
+<p>Constructing C from the ground up:</p>
+<ul class="simple">
+<li><p>organizing our opcode bytes into non-overlapping “callable” units of bytes</p>
+<ul>
+<li><p>unique label that demarks “entry point”</p></li>
+<li><p>all terminating cases end with a return</p></li>
+<li><p>fixed convention for passing arguments and general register use between caller and callee</p></li>
+<li><p>fixed convention for local variables</p>
+<ul>
+<li><p>stack frame organization</p></li>
+<li><p>freedom to avoid stack and only use registers if possible</p></li>
+</ul>
+</li>
+<li><p>while still supporting the ability to cheat</p></li>
+</ul>
+</li>
+<li><p>organizing and ensuring consistent use of data bytes into data objects (however with the ability to cheat if we want too)</p></li>
+<li><p>intrinsic byte oriented objects</p></li>
+<li><p>direct support for working with addresses</p>
+<ul>
+<li><p>exposing the address of data objects</p></li>
+<li><p>allowing addresses to be assocaited with a type</p></li>
+<li><p>allowing one to create data objects to hold typed addresses</p></li>
+</ul>
+</li>
+<li><p>arrays of intrinisics</p></li>
+<li><p>global vs local</p></li>
+<li><p>structures and unions</p></li>
+<li><p>arrays of structs and unions</p></li>
+<li><p>struct and union address types</p></li>
+<li><p>Ability to express common flow control idioms</p>
+<ul>
+<li><p>if then else</p></li>
+<li><p>do, while; while; for</p></li>
+<li><p>limited ability to demark and jump to labels : goto</p></li>
+<li><p>jump tables : switch</p></li>
+<li><p>function pointers</p></li>
+</ul>
+</li>
+<li><p>Support for side stepping the rules</p>
+<ul>
+<li><p>cheating and using and address of a data object in a arbitrary way</p></li>
+<li><p>working with an arbitrary address as either data or opcodes</p></li>
+<li><p>inserting opcodes directly using assembly syntax</p></li>
+</ul>
+</li>
+<li><p>Using the OS</p></li>
+<li><p>More generally idomatic support for easily creating and using libraries of code</p></li>
+</ul>
+<p>Remember all of what we learnt about assembling and linking still happens “C” is just a step added before these two stages.  Instead of writing <code class="docutils literal notranslate"><span class="pre">.S</span></code> files directly we are writting <code class="docutils literal notranslate"><span class="pre">.C</span></code> that each get translated into an associated <code class="docutils literal notranslate"><span class="pre">.S</span></code> by the compiler which then gets translated into a relocatable object module <code class="docutils literal notranslate"><span class="pre">.o</span></code> which all then get linked into an executable via the linker.  This means our ‘C’ code naturally fits into and extends what we can do the our binary oriented tools versus restricting what we can do.</p>
+<p>Compilers also can codify best practices for a particular machine and OS.  After all it has to translate the ‘C’ code into machine and OS specific assembly code.  For the most part however, OS specific differences are handled by use of libraries written to support common functions that are implemented for each OS that is supported.</p>
+</section>
+<section id="preliminaries-the-c-compiler-our-very-onw-personal-assembly-programmer">
+<h2><span class="section-number">24.9. </span>Preliminaries:  The C Compiler : Our very onw personal assembly programmer<a class="headerlink" href="#preliminaries-the-c-compiler-our-very-onw-personal-assembly-programmer" title="Permalink to this headline">#</a></h2>
+<section id="the-toolchain">
+<h3><span class="section-number">24.9.1. </span>The ToolChain<a class="headerlink" href="#the-toolchain" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="cc1-as-ld">
+<h2><span class="section-number">24.10. </span>cc1, as, ld<a class="headerlink" href="#cc1-as-ld" title="Permalink to this headline">#</a></h2>
+<section id="compiler-driver-gcc-cc">
+<h3><span class="section-number">24.10.1. </span>Compiler driver: gcc/cc<a class="headerlink" href="#compiler-driver-gcc-cc" title="Permalink to this headline">#</a></h3>
+</section>
+</section>
+<section id="controlling-directing-the-compiler">
+<h2><span class="section-number">24.11. </span>Controlling / Directing the compiler<a class="headerlink" href="#controlling-directing-the-compiler" title="Permalink to this headline">#</a></h2>
+<section id="options">
+<h3><span class="section-number">24.11.1. </span>Options<a class="headerlink" href="#options" title="Permalink to this headline">#</a></h3>
+<section id="optimization-options">
+<h4><span class="section-number">24.11.1.1. </span>Optimization options<a class="headerlink" href="#optimization-options" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="language-options">
+<h4><span class="section-number">24.11.1.2. </span>Language options<a class="headerlink" href="#language-options" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="debugger-options">
+<h4><span class="section-number">24.11.1.3. </span>Debugger options<a class="headerlink" href="#debugger-options" title="Permalink to this headline">#</a></h4>
+</section>
+<section id="machine-specific-options">
+<h4><span class="section-number">24.11.1.4. </span>Machine Specific options<a class="headerlink" href="#machine-specific-options" title="Permalink to this headline">#</a></h4>
+</section>
+</section>
+<section id="our-focus">
+<h3><span class="section-number">24.11.2. </span>Our focus<a class="headerlink" href="#our-focus" title="Permalink to this headline">#</a></h3>
+<p>We will use a set of options that let us focus on understanding the core ability of the compiler to generate assembly code for us.  Specifically we will be focusing on how it translates “C” syntax into assembly code.  We will use a set of options that make it easier to see this relationship by having the compiler avoid adding extra assembly syntax needed for the debugging, or to improve the security of the code it generates.</p>
+</section>
+</section>
+</section>
+
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"05aae8f1154e467abcd4f07a6eb690ae": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_da0142059b9a4952b5e92022e90297cf", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ type -p python/opt/conda/bin/python\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "0b598836595840899660a4501ebd93b7": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "4b26940ece654882bebfe7d9902ffc8e": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_0b598836595840899660a4501ebd93b7", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ file $(type -p python3.9)Usage: file [-bcCdEhikLlNnprsSvzZ0] [--apple] [--extension] [--mime-encoding]\r\n            [--mime-type] [-e <testname>] [-F <separator>]  [-f <namefile>]\r\n            [-m <magicfiles>] [-P <parameter=value>] <file> ...\r\n       file -C [-m <magicfiles>]\r\n       file [--help]\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "4f8302dd22bf4b07a1452780b164e3eb": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_7b28414f6a4f4a8685dcf3897d790542", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ objdump -M intel -d $(type -p python3.9) | head -20objdump: 'a.out': No such file\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "67323e359dbb4da8bc45b1a14b604f89": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "718fe03f7f314ea89c115bff75bbdb27": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "78c6e0bdf2134dac98d11caeca186cf5": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_8d7b38f1528b43a58ba0d08130a600e0", "msg_id": "", "outputs": [{"name": "stdout", "output_type": "stream", "text": "$ ls -lh $(type -p python3.9)\ntotal 140K\r\nlrwxrwxrwx. 1 jovyan 1001050000   13 Sep  1 00:32 \u001b[0m\u001b[01;36mL17.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000  28K Sep  1 00:32 L17.ipynb\r\nlrwxrwxrwx. 1 jovyan 1001050000   13 Sep  1 00:32 \u001b[01;36mL18.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000  31K Sep  1 00:32 L18.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000 1.4K Sep  1 00:32 L19.ipynb\r\nlrwxrwxrwx. 1 jovyan 1001050000   13 Sep  1 00:32 \u001b[01;36mL20.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000  30K Sep  1 00:32 L20.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000 1.1K Sep  1 00:32 L21.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  633 Sep  1 00:32 L22.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  633 Sep  1 00:32 L23.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  633 Sep  1 00:32 L24.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  633 Sep  1 00:32 L25.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000 2.0K Sep  1 00:32 functions.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  19K Sep  1 00:32 intro.ipynb\r\n$ "}]}}, "7b28414f6a4f4a8685dcf3897d790542": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8d7b38f1528b43a58ba0d08130a600e0": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "92f8245092a541dca8e47102b9fee7ec": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_ff4e3f3340894b29914d619e90306bb3", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ ls -l $(type -p python)lrwxrwxrwx. 1 jovyan root 10 Jan 23  2023 \u001b[0m\u001b[01;36m/opt/conda/bin/python\u001b[0m -> \u001b[01;32mpython3.10\u001b[0m\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "c07ccfcd2cb84307a3bc3654921febca": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_718fe03f7f314ea89c115bff75bbdb27", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ ls -l $(type -p python3.9)total 140\r\nlrwxrwxrwx. 1 jovyan 1001050000    13 Sep  1 00:32 \u001b[0m\u001b[01;36mL17.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000 28632 Sep  1 00:32 L17.ipynb\r\nlrwxrwxrwx. 1 jovyan 1001050000    13 Sep  1 00:32 \u001b[01;36mL18.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000 30724 Sep  1 00:32 L18.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  1372 Sep  1 00:32 L19.ipynb\r\nlrwxrwxrwx. 1 jovyan 1001050000    13 Sep  1 00:32 \u001b[01;36mL20.css\u001b[0m -> ../css/ln.css\r\n-rw-rw-r--. 1 jovyan 1001050000 30029 Sep  1 00:32 L20.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  1061 Sep  1 00:32 L21.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000   633 Sep  1 00:32 L22.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000   633 Sep  1 00:32 L23.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000   633 Sep  1 00:32 L24.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000   633 Sep  1 00:32 L25.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000  2022 Sep  1 00:32 functions.ipynb\r\n-rw-rw-r--. 1 jovyan 1001050000 18847 Sep  1 00:32 intro.ipynb\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "ca8c3a587df44b85bf92cce9df430334": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_67323e359dbb4da8bc45b1a14b604f89", "msg_id": "", "outputs": [{"data": {"text/markdown": "<pre style=\"border: solid #cccccc 2px; background-color: black; font-family: monospace, monospace; font-size: inherit; color: white\">\n$ echo -e 'set disassembly-flavor intel\nb _start\nrun\ndisass\nquit' | gdb $(type -p python)\u001b[35;1mGNU gdb (GDB) 12.1\u001b[m\r\nCopyright (C) 2022 Free Software Foundation, Inc.\r\nLicense GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\r\nThis is free software: you are free to change and redistribute it.\r\nThere is NO WARRANTY, to the extent permitted by law.\r\nType \"show copying\" and \"show warranty\" for details.\r\nThis GDB was configured as \"x86_64-pc-linux-gnu\".\r\nType \"show configuration\" for configuration details.\r\nFor bug reporting instructions, please see:\r\n<https://www.gnu.org/software/gdb/bugs/>.\r\nFind the GDB manual and other documentation resources online at:\r\n    <http://www.gnu.org/software/gdb/documentation/>.\r\n\r\nFor help, type \"help\".\r\nType \"apropos word\" to search for commands related to \"word\"...\r\nReading symbols from \u001b[32m/opt/conda/bin/python\u001b[m...\r\n(gdb) (gdb) Breakpoint 1 at \u001b[34m0x1dc558\u001b[m\r\n(gdb) Starting program: \u001b[32m/opt/conda/bin/python\u001b[m \r\n[Thread debugging using libthread_db enabled]\r\nUsing host libthread_db library \"\u001b[32m/lib/x86_64-linux-gnu/libthread_db.so.1\u001b[m\".\r\n\r\nBreakpoint 1, \u001b[34m0x0000555555730558\u001b[m in \u001b[33m_start\u001b[m ()\r\n(gdb) Dump of assembler code for function \u001b[33m_start\u001b[m:\r\n=> \u001b[34m0x0000555555730558\u001b[m <+0>:\txor    ebp,ebp\r\n   \u001b[34m0x000055555573055a\u001b[m <+2>:\tmov    r9,rdx\r\n   \u001b[34m0x000055555573055d\u001b[m <+5>:\tpop    rsi\r\n   \u001b[34m0x000055555573055e\u001b[m <+6>:\tmov    rdx,rsp\r\n   \u001b[34m0x0000555555730561\u001b[m <+9>:\tand    rsp,0xfffffffffffffff0\r\n   \u001b[34m0x0000555555730565\u001b[m <+13>:\tpush   rax\r\n   \u001b[34m0x0000555555730566\u001b[m <+14>:\tpush   rsp\r\n   \u001b[34m0x0000555555730567\u001b[m <+15>:\tlea    r8,[rip+0x98662]        # \u001b[34m0x5555557c8bd0\u001b[m <\u001b[33m__libc_csu_fini\u001b[m>\r\n   \u001b[34m0x000055555573056e\u001b[m <+22>:\tlea    rcx,[rip+0x9866b]        # \u001b[34m0x5555557c8be0\u001b[m <\u001b[33m__libc_csu_init\u001b[m>\r\n   \u001b[34m0x0000555555730575\u001b[m <+29>:\tlea    rdi,[rip+0xb4]        # \u001b[34m0x555555730630\u001b[m <\u001b[33mmain\u001b[m>\r\n   \u001b[34m0x000055555573057c\u001b[m <+36>:\tcall   \u001b[34m0x5555555ae020\u001b[m <\u001b[33m__libc_start_main@plt\u001b[m>\r\n   \u001b[34m0x0000555555730581\u001b[m <+41>:\thlt    \r\n   \u001b[34m0x0000555555730582\u001b[m <+42>:\tnop\r\n   \u001b[34m0x0000555555730583\u001b[m <+43>:\tnop\r\nEnd of assembler dump.\r\n(gdb) A debugging session is active.\r\n\r\n\tInferior 1 [process 3082] will be killed.\r\n\r\nQuit anyway? (y or n) [answered Y; input not from terminal]\r\n</pre>", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "da0142059b9a4952b5e92022e90297cf": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ff4e3f3340894b29914d619e90306bb3": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": "1px solid black", "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "100%", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": "scroll", "padding": null, "right": null, "top": null, "visibility": null, "width": null}}}, "version_major": 2, "version_minor": 0}
+</script>
+
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./C"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../assembly/assemblyOS.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">23. </span>Assembly using the OS</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../BUCS210_intro.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">BU CS210 Overview</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Jonathan Appavoo<br/>
+  
+      &copy; Copyright 2021.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
