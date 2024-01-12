@@ -51,8 +51,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="16. Lets write some assembly code" href="assembly.html" />
@@ -549,60 +547,10 @@ title="Print to PDF"
 <p>While you may be familiar with debuggers and their use to find bugs in Java or python code there is much more to them than meets the eye.</p>
 <p>There are low-level-debuggers that are designed and built to allow you to inspect and control the cpu and memory of a process, giving you direct access to the inner binary works of the computer and your code while it is running.  In addition, low-level-debuggers  may simultaneously let you work symbolically (with the source code of the program being debugged).  This lets you both see what is going on in the CPU and memory and how this relates to the original ASCII source files you wrote to create the binary being run in the process.  In our case the source files will be assembly source at first and then C later.   Regardless using the underlying view of the CPU and memory will reveal what is really going on.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<!-- produced by: 
-htmlFig("[{'src': '../images/gdbsurgery/gdbsurgery.002.png'}]", 
-        id="fig:surgery", 
-        align="center", 
-        width="80%",
-        margin="auto auto auto auto",
-        caption="Figure: Using a debugger to conduct open Process Surgery.  This figure illustrates the analogy between using a debugger like gdb to explore and mainiputate a process in a way that is similar to conducting a robotic surgery on a human patient. The patient is a running process, the robotic surgery tool is a gdb process attached to the target process, and finally the terminal we are running gdb is our inteface where we use the facilities of gdb to explore and mainipulate the target process.", 
-        captionalign="left")
--->
-<table id="fig:surgery" align="center" width="80%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: auto auto auto auto">
-    <tr style="padding: 0; margin: 0;"> 
-        <td colspan="1" width="100%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
-            <div style="padding: 0; margin: 0 0 0 0;">
-              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
-                   <img src="../images/gdbsurgery/gdbsurgery.002.png" width="100%" style="padding: 0; margin: 0;">
-                </figure>
-            </div>
-        </td>
-    </tr>
-    <caption align="bottom" style="text-align: left; padding: 0; margin: 0;" >
-          <i>Figure: Using a debugger to conduct open Process Surgery.  This figure illustrates the analogy between using a debugger like gdb to explore and mainiputate a process in a way that is similar to conducting a robotic surgery on a human patient. The patient is a running process, the robotic surgery tool is a gdb process attached to the target process, and finally the terminal we are running gdb is our inteface where we use the facilities of gdb to explore and mainipulate the target process.</i> 
-    </caption>
-</table>
-</div>
 </div>
 <p>While they  can seem intimidating at first such low-level debuggers are incredibly powerful tools that help us freeze, dissect and modify a running program.   In some sense they let us conduct <a href="#fig:surgery">surgery</a> on a process.  In doing so the anatomy of the hardware and software are laid bare for us to see and manipulate.</p>
 <p>Like the shell the debugger, GDB, that we will use has a some what  cryptic terminal interface with a some times strange command syntax.    But like the shell once you get over the initial learning curve you will find the power you have at your fingertips to be quite remarkable.</p>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<!-- produced by: 
-htmlFig("[{'src': '../images/gdbtuiexample.png'}]", 
-        id="fig:gdbtui", 
-        align="center", 
-        width="80%",
-        margin="auto auto auto auto",
-        caption="Figure: Example of using the 'TUI' mode of gdb. Using the flexibility of TUI mode we have br", 
-        captionalign="left")
--->
-<table id="fig:gdbtui" align="center" width="80%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: auto auto auto auto">
-    <tr style="padding: 0; margin: 0;"> 
-        <td colspan="1" width="100%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
-            <div style="padding: 0; margin: 0 0 0 0;">
-              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
-                   <img src="../images/gdbtuiexample.png" width="100%" style="padding: 0; margin: 0;">
-                </figure>
-            </div>
-        </td>
-    </tr>
-    <caption align="bottom" style="text-align: left; padding: 0; margin: 0;" >
-          <i>Figure: Example of using the 'TUI' mode of gdb. Using the flexibility of TUI mode we have br</i> 
-    </caption>
-</table>
-</div>
 </div>
 <blockquote>
 <div><p>GNU Debugger (gdb) is the debugger we will use as it is the default debugger available on Linux.  GDB was originally modeled after XDB from the BSD family of UNIX systems.    To make our lives a little easier we will use the built in support gdb has for text windowed interface called TUI.   The TUI mode will allow us to split the terminal interface of gdb into multiple portions in which we can keep a constant eye on information like the cpu registers while we issue commands.  One can start gdb in tui mode in three ways: 1) use <code class="docutils literal notranslate"><span class="pre">gdbtui</span></code> as a shotcut for 2) starting gdb with the tui flag <code class="docutils literal notranslate"><span class="pre">gdb</span> <span class="pre">-tui</span></code> and 3) switching into tui mode after you started gdb in its default nontui mode eg.  issue <code class="docutils literal notranslate"><span class="pre">gdb</span></code> to start it in its default mode and then issue the following command to gdb to switch into tui mode <code class="docutils literal notranslate"><span class="pre">tui</span> <span class="pre">enable</span></code> (similarly you can switch out of tui mode vai <code class="docutils literal notranslate"><span class="pre">tui</span> <span class="pre">disable</span></code>).</p>
@@ -611,31 +559,6 @@ htmlFig("[{'src': '../images/gdbtuiexample.png'}]",
 <section id="overview">
 <h2><span class="section-number">15.1. </span>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
 <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<!-- produced by: 
-htmlFig("[{'src': '../images/gdbprocesses.png'}]", 
-        id="fig:gdbprocesses", 
-        align="center", 
-        width="100%",
-        margin="auto auto auto auto",
-        caption="Figure: Debugger in control of a target process running the executable myPgm.  Here two processes; 1) running the executable `myPgm` and 2) running the `gdb` executable.  `gdb` establishes a special relationship to the target process.  In particular, it uses special calls to the operating system kernel to control the target process and access the data structures that the kernel uses to maintain the memory and cpu state of the process, called its 'Context'.  Like other standard UNIX processes gdb has a connection to a terminal.  This allows the user to explore and mainpulate the target process via the commands of gdb. The software in a UNIX kernel that represents a processes connction to a terminal is called a `tty`.", 
-        captionalign="left")
--->
-<table id="fig:gdbprocesses" align="center" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; margin: auto auto auto auto">
-    <tr style="padding: 0; margin: 0;"> 
-        <td colspan="1" width="100%" style="padding: 0; margin: 0 0 0 0; background-color:inherit;">
-            <div style="padding: 0; margin: 0 0 0 0;">
-              <figure style="padding: 0; margin: 0 0 0 0; width:100%;">
-                   <img src="../images/gdbprocesses.png" width="100%" style="padding: 0; margin: 0;">
-                </figure>
-            </div>
-        </td>
-    </tr>
-    <caption align="bottom" style="text-align: left; padding: 0; margin: 0;" >
-          <i>Figure: Debugger in control of a target process running the executable myPgm.  Here two processes; 1) running the executable `myPgm` and 2) running the `gdb` executable.  `gdb` establishes a special relationship to the target process.  In particular, it uses special calls to the operating system kernel to control the target process and access the data structures that the kernel uses to maintain the memory and cpu state of the process, called its 'Context'.  Like other standard UNIX processes gdb has a connection to a terminal.  This allows the user to explore and mainpulate the target process via the commands of gdb. The software in a UNIX kernel that represents a processes connction to a terminal is called a `tty`.</i> 
-    </caption>
-</table>
-</div>
 </div>
 <p>Let’s begin with an overview of the relationship between the debugger and the process we want to debug running a particular binary executable.</p>
 <p>There are three basic way of setting up this relationship:</p>
@@ -677,10 +600,6 @@ htmlFig("[{'src': '../images/gdbprocesses.png'}]",
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html">
-<iframe src="https://jappavoo.github.io/SOL6502/asciinema/atest.html", height="600x" width="100%"></iframe>
-</div></div>
 </div>
 </section>
 </section>

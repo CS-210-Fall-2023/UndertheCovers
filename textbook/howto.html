@@ -51,8 +51,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="https://unpkg.com/@jupyter-widgets/html-manager@^0.20.1/dist/embed-amd.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="1. Operating Systems and UNIX" href="unix/intro.html" />
@@ -698,37 +696,41 @@ what the problem was.  If possible include a screenshot.</p>
 </section>
 <section id="step-0-start-your-server">
 <h2>Step 0: Start your server<a class="headerlink" href="#step-0-start-your-server" title="Permalink to this headline">#</a></h2>
-<p>If you are in a BU class that is using this book, follow this <a class="reference external" href="https://rhods-dashboard-redhat-ods-applications.apps.awscas210.zkf1.p1.openshiftapps.com/notebookController/spawner">link</a>.</p>
+<p>If you are in a BU class that is using this book, follow this <a class="reference external" href="https://rhods-dashboard-redhat-ods-applications.apps.shift.nerc.mghpcc.org/notebookController">link</a>.</p>
 <section id="bu-server-startup">
 <h3>BU Server startup<a class="headerlink" href="#bu-server-startup" title="Permalink to this headline">#</a></h3>
 <p>Clicking on the above link should take you to the following page:</p>
 <center>
-<img src="images/howto/howto0.png" >
+<img src="images/howto/howtoa.png" >
 </center>
 Clicking "Login with OpenShift".  This will take you to the page displayed below.
 <center>
-<img src="images/howto/howto0.1.png">
+<img src="images/howto/howtob.png">
 </center>
-Click "GoogleBU".  This will take you to the following login page.  
+Click "mss-keycloak".  This will take you to the following login page.  
 <center>
-<img src="images/howto/howto0.2.png" >
+<img src="images/howto/howtoc.png" >
 </center>
-Enter your BU username and password and then click "Continue".  This may then redirect you to BU's two factor authentication service as shown below
+Select "Boston University" and click "Log On". This may then redirect you to BU's login page. 
 <center>
-<img src="images/howto/howto0.3.png" >
+<img src="images/howto/howtod.png" >
 </center>
+Enter your BU username and password and then click "Continue".  This may then redirect you to BU's two factor authentication service.
 Select your choice of authentication mechanism.  If you are not able to login try again using an <a href="https://support.google.com/chrome/answer/95464?hl=en&co=GENIE.Platform%3DDesktop">"incognito" browser window"</a>.  If you still cannot login and you are sure you are in a class that is using the book please contact the teaching staff and they will add your BU user to the service.
 </section>
 <section id="booting-your-server">
 <h3>Booting your server<a class="headerlink" href="#booting-your-server" title="Permalink to this headline">#</a></h3>
 <p>After login you should be presented with the following panel.  You will need to:</p>
 <ol class="simple">
-<li><p>Select the right “Notebook Image” (“UCSLS UNIX Environment” or “Under the Covers: The Secret Life of Software”),</p></li>
+<li><p>Select the right “Notebook Image” (“Underthecovers (current class image)”),</p></li>
 <li><p>Select “Start server in current tab”, and then</p></li>
-<li><p>click on the “Start Server” button.</p></li>
+<li><p>Click on the “Start Server” button.</p></li>
 </ol>
 <center>
-<img src="images/howto/howto1.png" >
+<img src="images/howto/howtoe.png" >
+</center>
+<center>
+<img src="images/howto/howtof.png" >
 </center>
 <p>You then should observe the following sequence progress as your server starts up</p>
 <!-- produced by: 
@@ -765,9 +767,9 @@ htmlFig("[[{'src': 'images/howto/howto2.png', 'cellwidth': '33.33%'}, {'src': 'i
         </td>
     </tr>
 </table>
-<p>At this point you may be presented again with the following login page on which you should again select “GoogleBU”.</p>
+<p>At this point you may be presented again with the following login page on which you should again select “mss-keycloak”.</p>
 <center>
-<img src="images/howto/howto4.1.png" >
+<img src="images/howto/howtoh.png" >
 </center></section>
 </section>
 <section id="unix-terminal-environment">
